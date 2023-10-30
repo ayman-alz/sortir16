@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block header %}
+
+    <a href="" class="link-underline-light">Viles</a>
+    <a href="" class="link-underline-light">Campus</a>
+    <a href="{{ url('app_home') }}" class="link-underline-light">Accueil</a>
+    <a href="{{ url('app_mon_profil') }}" class="link-underline-light">Mon Profil</a>
+    <a href="" class="link-underline-light">Se déconnecter</a>
+
+{% endblock %}
+{% block content %}
+
+    <div class="row p-5 d-flex justify-content-between">
+        <div class="col-md-4">
+            <h4> Filtrer Les Sorties</h4>
+
+            <label for="campus">Campus</label>
+            <select id="campus" name="campus" class="form-control">
+                <option value="campus1">Campus 1</option>
+                <option value="campus2">Campus 2</option>
+                <option value="campus3">Campus 3</option>
+            </select>
+
+        </div>
+        <div class="col-md-4">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
+                    <label class="form-check-label" for="firstCheckbox">First checkbox</label>
+                </li>
+                <li class="list-group-item">
+                    <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox">
+                    <label class="form-check-label" for="secondCheckbox">Second checkbox</label>
+                </li>
+                <li class="list-group-item">
+                    <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">
+                    <label class="form-check-label" for="thirdCheckbox">Third checkbox</label>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-3">
+
+        </div>
+    </div>
+{% endblock %}
