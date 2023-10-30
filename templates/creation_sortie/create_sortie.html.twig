@@ -1,108 +1,101 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CreationSortieController!{% endblock %}
+{% block title %}Create Sortie{% endblock %}
 
+{% block header %}
+    <a class="text-decoration-none" href="{{ url('app_home') }}">Accueil</a>
+    <a class="text-decoration-none" href="{{ url('app_mon_profil') }}">Mon Profil</a>
+    <a class="text-decoration-none" href="">Se déconnecter</a>
+
+{% endblock %}
 {% block content %}
 
 
 
 
-              <center>  <h1>Créer une sortie</h1></center>
+    <center><h1>Créer une sortie</h1></center>
 
-
-
-    <form method="post" class="mt-4">
-        <div class="row d-flex justify-content-center align-items-center p-5">
-            <div class="col-md-6">
-                <label for="nom-de-sortie">nom de la sortie </label>
-                <input type="text" id="nom-de-sortie" name="nom-de-sortie" class="form-control" required>
-                <div class="form-group">
-                    <label for="date">Date et heure de la sortie </label>
-                    <input type="date" id="prenom" name="date-heure" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="nom">Date limite d'inscription</label>
-                    <input type="text" id="date-inscription" name="date-inscription" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="telephone">Nombre de places</label>
-                    <input type="number" id="telephone" name="bombre-place" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Durée</label>
-                    <input type="number" id="email" name="duree" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="motdepasse">Inscription et infos</label>
-                    <textarea id="inscription" name="inscription" class="form-control" required>    </textarea>
-                </div>
+    <div class="row d-flex justify-content-center align-items-start p-5">
+        <div class="col-md-6">
+            <label for="nom-de-sortie">Nom de la sortie </label>
+            <input type="text" id="nom-de-sortie" name="nom_nom" class="form-control" required>
+            <div class="form-group">
+                <label for="date">Date et heure de la sortie </label>
+                <input type="date" id="prenom" name="date-heure" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="nom">Date limite d'inscription</label>
+                <input type="date" id="date-inscription" name="date-inscription" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="telephone">Telephone</label>
+                <input type="text" id="telephone" name="bombre-place" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Durée</label>
+                <input type="number" id="email" name="duree" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="motdepasse">Inscription et infos</label>
+                <textarea id="inscription" name="infos" class="form-control" required>    </textarea>
             </div>
 
-
-
-
-            <div class="col-md-6">
-
-
-                <div class="form-group">
-                    <label for="telephone">Campus </label>
-                    <input type="text" id="Campus" name="Campus" class="form-control" required>
-                </div>
-
-
-                <div class="form-group">
-                    <label for="date"> Ville </label>
-                    <select name="ville" id="ville">
-                        <option value="">choisissez une ville </option>
-                        <option value="dog">Rennes</option>
-                        <option value="cat">Paris</option>
-                        <option value="hamster">lskj</option>
-                        <option value="parrot"></option>
-                        <option value="spider"></option>
-                        <option value="goldfish"></option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="nom">Lieu</label>
-                    <select name="lieu" id="lieu">
-                        <option value="">choisissez une ville </option>
-                        <option value="dog">Rennes</option>
-                        <option value="cat">Paris</option>
-                        <option value="hamster">lskj</option>
-                        <option value="parrot"></option>
-                        <option value="spider"></option>
-                        <option value="goldfish"></option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="telephone">Rue </label>
-                    <input type="text" id="Rue" name="Rue" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Code postle</label>
-                    <input type="number" id="Codepostle" name="Codepostle" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="motdepasse">Latitude </label>
-                    <input type="text" id="inscription" name="inscription" class="form-control" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="motdepasse">Langitude </label>
-                    <input type="text" id="inscription" name="inscription" class="form-control" required>
-                </div>
-            </div>
-
-
-
-        <div class=" col-6 ">
-        <button type="submit" class="btn btn-primary mt-4">Enregistrer</button>
-        <button type="submit" class="btn btn-secondary mt-4">Publier la sortie </button>
-        <button type="button" class="btn btn-danger mt-4 ">Annuler</button>
-
-
-    </div>
         </div>
+
+
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <label for="telephone">Campus </label>
+                <input type="text" id="Campus" name="campus" class="form-control" required>
+            </div>
+
+
+            <div class="form-group">
+                <label for="date"> Ville </label>
+                <select name="ville" class="form-select" aria-label="Default select example">
+                    <option selected>Choisissez une ville</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="nom">Lieu</label>
+                <select class="form-select" aria-label="Default select example" name="lieu" id="lieu">
+                    <option value="">Choissez une Lieu</option>
+                    <option value="dog">Rennes</option>
+                    <option value="cat">Paris</option>
+                    <option value="hamster">lskj</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="telephone">Rue </label>
+                <input type="text" id="Rue" name="rue" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Code postle</label>
+                <input type="number" id="Codepostle" name="code_post" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Latitude </label>
+                <input type="text" name="latitude" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Langitude </label>
+                <input type="text" name="langitude" class="form-control" required>
+            </div>
+        </div>
+
+
+        <div class="d-flex justify-content-evenly mt-4 ">
+            <button type="submit" class="btn btn-primary mt-4">Enregistrer</button>
+            <button type="submit" class="btn btn-secondary mt-4">Publier la sortie</button>
+            <button type="button" class="btn btn-danger mt-4 ">Annuler</button>
+
+        </div>
+    </div>
 
 
     </form>

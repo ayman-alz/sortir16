@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ville Gérer!{% endblock %}
+
+{% block header %}
+    <a class="text-decoration-none" href="{{ url('app_home') }}">Accueil</a>
+    <a class="text-decoration-none" href="{{ url('app_mon_profil') }}">Mon Profil</a>
+    <a class="text-decoration-none" href="">Se déconnecter</a>
+
+{% endblock %}
+
+{% block content %}
+    <h2 class="d-flex justify-content-center"> Gérer les Villes</h2>
+    <div class="row p-5 d-flex justify-content-between  align-items-end">
+        <h4 > Filtrer Les Villes</h4>
+        <form action="post" class="mt-2">
+            <div class="row d-flex align-items-end">
+                <div class="col-md-3">
+                    <label>Le nom de  content :</label>
+                </div>
+                <div class="col-md-4">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-success">Rechercher</button>
+                </div>
+
+            </div>
+        </form>
+        <div class="row p-1 d-flex align-items-center mt-5" style="border: solid 1px gray ; border-radius: 10px" >
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Nom de la Campus</th>
+
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Tablonun içeriği buraya eklenebilir -->
+                <tr>
+                    <td>Saint Herplain</td>
+
+                    <td>
+                        <button class="btn btn-primary">Modify</button>
+                        <button class="btn btn-danger">Suprimer</button>
+                    </td>
+                </tr>
+                <tr>
+                    <form>
+                        <td>
+                            <div class="form-group">
+                                <input placeholder="Ville Name" type="text" id="pseudo" name="ville" class="form-control" required>
+                            </div>
+                        </td>
+
+                        <td>
+                            <button class="btn btn-primary">Ajoute</button>
+
+                        </td>
+                    </form>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+{% endblock %}

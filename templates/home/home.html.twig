@@ -1,39 +1,64 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Home!{% endblock %}
 
 {% block header %}
 
-    <a href="" class="link-underline-light">Viles</a>
-    <a href="" class="link-underline-light">Campus</a>
-    <a href="{{ url('app_home') }}" class="link-underline-light">Accueil</a>
-    <a href="{{ url('app_mon_profil') }}" class="link-underline-light">Mon Profil</a>
-    <a href="" class="link-underline-light">Se déconnecter</a>
+    <a href="{{ url('app_ville') }}" class="text-decoration-none" >Viles</a>
+    <a href="{{ url('app_campus') }}" class="text-decoration-none" >Campus</a>
+    <a href="{{ url('app_home') }}" class="text-decoration-none">Accueil</a>
+    <a href="{{ url('app_mon_profil') }}" class="text-decoration-none">Mon Profil</a>
+    <a href="" class="text-decoration-none" >Se déconnecter</a>
 
 {% endblock %}
 {% block content %}
 
-    <div class="row p-5 d-flex justify-content-between">
-        <div class="col-md-4">
+    <div class="row p-5 d-flex justify-content-between  align-items-end">
+        <div class="col-md-5">
             <h4> Filtrer Les Sorties</h4>
             <div class="row">
-                <div class="col-md-4">
-                    <label for="campus">Campus</label>
-                </div>
-                <div class="col-md-8">
+                <form action="post">
+                    <div class="col-md-4">
+                        <label for="campus">Campus</label>
+                    </div>
+                    <div class="col-md-8">
+                        <select id="campus" name="campus" class="form-control">
+                            <option value="campus1">Campus 1</option>
+                            <option value="campus2">Campus 2</option>
+                            <option value="campus3">Campus 3</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
 
-                    <select id="campus" name="campus" class="form-control">
-                        <option value="campus1">Campus 1</option>
-                        <option value="campus2">Campus 2</option>
-                        <option value="campus3">Campus 3</option>
-                    </select>
-                </div>
+            <div class="row d-flex">
+                <form action="post">
+                    <div class="col-md-6">
+                        <label for="campus">Le nom de la sortie content :</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+
+                    </div>
+                </form>
+            </div>
+            <div class="row d-flex" style="">
+                <form action="post">
+                    <div class="col-md-4">
+                        <label>Entre :</label>
+                        <input type="date" class="form-control mr-sm-2" >
+                    </div>
+                    <div class="col-md-6">
+                        <label>Et :</label>
+                        <input type="date" class="form-control mr-sm-2" >
+
+                    </div>
+                </form>
             </div>
 
 
-
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5  ">
             <ul class="list-group">
                 <li class="list-group-item">
                     <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
@@ -47,9 +72,52 @@
                     <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">
                     <label class="form-check-label" for="thirdCheckbox">Third checkbox</label>
                 </li>
+                <li class="list-group-item">
+                    <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">
+                    <label class="form-check-label" for="thirdCheckbox">Third checkbox</label>
+                </li>
             </ul>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
+            <button class="btn btn-success" style="width: 100% ;height: 100px"> Rechercer</button>
+        </div>
+    </div>
+    <div class="row p-1 d-flex align-items-center" style="border: solid 1px gray ; border-radius: 10px" >
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Nom de la sortie</th>
+                <th scope="col">Date de la sortie</th>
+                <th scope="col">Clôture</th>
+                <th scope="col">Inscrits/Place</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Inscrit</th>
+                <th scope="col">Organisateur</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Tablonun içeriği buraya eklenebilir -->
+            <tr>
+                <td>Çıkış Adı 1</td>
+                <td>01.01.2023</td>
+                <td>15.12.2022</td>
+                <td>25/30</td>
+                <td>Aktif</td>
+                <td>John Doe</td>
+                <td>Mary Johnson</td>
+                <td>
+                    <button class="btn btn-primary">Modify</button>
+                    <button class="btn btn-danger">Suprimer</button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-md-3 mt-3 d-flex justify-content-start">
+            <a href="{{ url('app_creation_sortie') }}"class="text-decoration-none btn btn-warning" > Créer une sortie</a>
 
         </div>
     </div>
