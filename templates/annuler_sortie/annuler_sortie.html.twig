@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AnnulerSortieController!{% endblock %}
+
+{% block content %}
+
+
+
+    <form method="post" class="mt-4">
+        <div class="text-center">
+            <h1 class="mb-5">Annuler une sortie</h1>
+            <div class="row justify-content-center align-items-center" >
+
+                <div class=" col-md-6" style="float: left">
+                    <div class="form-group">
+                        <label for="nom-de-sortie">Nom de la sortie : </label>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date limite d'inscription : </label>
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="campus">Campus : </label>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="lieu">lieu : </label>
+
+
+                    </div>
+                    <div class="form-group">
+                        <label for="motif">motif : </label>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                        <label for="nom-de-sortie">Nom de la sortie </label>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="nom-de-sortie">22/22/22  </label>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="nom-de-sortie">campus  </label>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label for="lieu">place   </label>
+
+
+                    </div>
+                    <div class="form-group">
+
+                        <textarea id="motif" name="motif" class="form-control" required>    </textarea>
+                    </div>
+
+                </div>
+
+
+                <div class="d-flex justify-content-evenly ">
+                    <button type="submit" class="btn btn-primary mt-4">Enregistrer</button>
+                    <button type="button" class="btn btn-danger mt-4 ">Annuler</button>
+
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+
+{% endblock %}
