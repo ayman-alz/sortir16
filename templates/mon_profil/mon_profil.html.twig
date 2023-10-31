@@ -5,39 +5,38 @@
 
 {% block header %}
     <a class="text-decoration-none"  href="{{ url('app_home') }}">Accueil</a>
-    <a class="text-decoration-none"  href="{{ url('app_mon_profil') }}">Mon Profil</a>
+    <a class="text-decoration-none"  href="{{ path('app_mon_profil',{'id':participant.id}) }}">Mon Profil</a>
     <a class="text-decoration-none"  href="">Se déconnecter</a>
 
 {% endblock %}
 
 {% block content %}
     <div class="text-center">
-        <h1 class="mb-5">Pseudo</h1>
+        <h1 class="mb-5"> {{ participant.prenom | capitalize}}</h1>
         <div class="row">
             <div class="col-md-4">
                 <img src="{{ asset('images/default-profil-image.jpg') }}" alt="User Photo" width="200" height="200">
             </div>
-            <div class="col-md-8 ">
+            <div class="col-md-8">
                 <dl class="dl-horizontal">
-                    <dt>Prénom:</dt>
-                    <dd></dd>
+                    <dt style="text-align: left;">Prenom:</dt>
+                    <dd><i>{{ participant.prenom | capitalize }}</i></dd>
 
-                    <dt>Nom:</dt>
-                    <dd></dd>
+                    <dt style="text-align: left;">Nom:</dt>
+                    <dd><i>{{ participant.nom | capitalize }}</i></dd>
 
-                    <dt>Téléphone:</dt>
-                    <dd></dd>
+                    <dt style="text-align: left;">Téléphone:</dt>
+                    <dd><i>{{ participant.telephone | capitalize }}</i></dd>
 
-                    <dt>Email:</dt>
-                    <dd></dd>
+                    <dt style="text-align: left;">Email:</dt>
+                    <dd><i>{{ participant.mail }}</i></dd>
 
-                    <dt>Campus:</dt>
-                    <dd></dd>
+                    <dt style="text-align: left;">Campus:</dt>
+                    <dd ><i>{{ participant.idCampus | capitalize }}</i></dd>
                 </dl>
             </div>
         </div>
         <a href="{{ url('app_home') }}" class="btn btn-primary">Home</a>
     </div>
-
 
 {% endblock %}
