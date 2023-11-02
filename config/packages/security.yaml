@@ -15,7 +15,16 @@ security:
             security: false
         main:
             lazy: true
+            provider: app_user_provider
+            logout:
+                path: app_logout
+            custom_authenticator: App\Security\AppAuthenticator
 
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                always_remember_me: true
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
