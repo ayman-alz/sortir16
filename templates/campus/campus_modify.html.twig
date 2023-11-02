@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Campus Gérer{% endblock %}
+
+{% block header %}
+    <a class="text-decoration-none" href="{{ url('app_home') }}">Accueil</a>
+    <a class="text-decoration-none" href="{{ url('app_mon_profil') }}">Mon Profil</a>
+    <a class="text-decoration-none" href="">Se déconnecter</a>
+
+{% endblock %}
+{% block content %}
+
+    <div class="row p-1 d-flex align-items-center mt-5" style="border: solid 1px gainsboro; border-radius: 10px">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Nom de la Campus</th>
+                <th scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <form method="POST">
+                    {{ form_start(campus_form) }}
+
+                    <table>
+                        <tr>
+                            <td>
+                                {{form_row(campus_form.nom)}}
+                                <button type="submit" class="btn btn-success">Ajouter</button>
+
+                            </td>
+
+                        </tr>
+                    </table>
+                    {{ form_end(campus_form) }}
+                </form>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+{% endblock %}

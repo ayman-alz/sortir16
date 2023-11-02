@@ -12,7 +12,7 @@
 
 {% block content %}
     <div class="text-center">
-        <h1 class="mb-5"> {{ participant.prenom | capitalize}}</h1>
+        <h1 class="mb-5"> {{ participant.pseudo | capitalize}}</h1>
         <div class="row">
             <div class="col-md-4">
                 <img src="{{ asset('images/default-profil-image.jpg') }}" alt="User Photo" width="200" height="200">
@@ -32,7 +32,7 @@
                     <dd><i>{{ participant.mail }}</i></dd>
 
                     <dt style="text-align: left;">Campus:</dt>
-                    <dd ><i>{{ participant.idCampus | capitalize }}</i></dd>
+                    <dd ><i>{{ participant.campus.nom | capitalize }}</i></dd>
                 </dl>
             </div>
         </div>

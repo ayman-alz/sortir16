@@ -11,60 +11,70 @@
 {% block content %}
 <h2 class="d-flex justify-content-center"> Gérer les campus</h2>
 <div class="row p-5 d-flex justify-content-between  align-items-end">
-        <h4 > Filtrer Les Sorties</h4>
-        <form action="post" class="mt-2">
+    <h4> Filtrer Les Sorties</h4>
+    <form action="post" class="mt-2">
         <div class="row d-flex align-items-end">
-                <div class="col-md-3">
-                    <label>Le nom de  content :</label>
-                </div>
-                <div class="col-md-4">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+            <div class="col-md-3">
+                <label>Le nom de content :</label>
+            </div>
+            <div class="col-md-4">
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search">
 
-                </div>
+            </div>
             <div class="col-md-4">
                 <button class="btn btn-success">Rechercher</button>
             </div>
 
         </div>
     </form>
-    <div class="row p-1 d-flex align-items-center mt-5" style="border: solid 1px gray ; border-radius: 10px" >
+    <div class="row p-1 d-flex align-items-center mt-5" style="border: solid 1px gainsboro; border-radius: 10px">
         <table class="table table-striped">
             <thead>
             <tr>
                 <th scope="col">Nom de la Campus</th>
-
                 <th scope="col">Actions</th>
             </tr>
             </thead>
             <tbody>
-            <!-- Tablonun içeriği buraya eklenebilir -->
-            <tr>
-                <td>Saint Herplain</td>
-
-                <td>
-                    <button class="btn btn-primary">Modify</button>
-                    <button class="btn btn-danger">Suprimer</button>
-                </td>
-            </tr>
-            <tr>
-                <form>
+            {% for campus_item in campusGetAll %}
+                <tr>
                     <td>
-                        <div class="form-group">
-                            <input placeholder="Campus Name" type="text" id="pseudo" name="campus" class="form-control" required>
-                        </div>
+                        <input type="text" value="{{ campus_item.nom }}" readonly
+                               class="form-control-plaintext campus-name-input">
                     </td>
-
                     <td>
-                        <button class="btn btn-primary">Ajoute</button>
-
+                        <a href="{{ path('app_create_campus_update', {'id': campus_item.id}) }}"
+                           class="btn btn-success modify-button">Modify</a>
+                        <a href="{{ path('app_create_campus_delete', {'id': campus_item.id}) }}" class="btn btn-danger">Supprimer</a>
                     </td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <form method="POST">
+                    {{ form_start(campus_form) }}
+
+                    <table>
+                        <tr>
+                            <td>
+                                 {{form_row(campus_form.nom)}}
+                                <button type="submit" class="btn btn-success">Ajouter</button>
+
+                            </td>
+
+                        </tr>
+                    </table>
+                    {{ form_end(campus_form) }}
                 </form>
-
             </tr>
             </tbody>
         </table>
     </div>
-
 </div>
+
+    {% endblock %}
+
+{% block javascripts %}
+
 
 {% endblock %}
