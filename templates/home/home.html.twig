@@ -4,11 +4,30 @@
 
 {% block header %}
 
-    <a href="{{ url('app_ville') }}" class="text-decoration-none" >Viles</a>
-    <a href="{{ url('app_create_campus') }}" class="text-decoration-none" >Campus</a>
-    <a href="{{ url('app_home') }}" class="text-decoration-none">Accueil</a>
-    <a href="{{ url('app_mon_profil') }}" class="text-decoration-none">Mon Profil</a>
-    <a href="" class="text-decoration-none" >Se déconnecter</a>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ url('app_ville') }}" class="text-decoration-none">Viles</a>
+        <a href="{{ url('app_create_campus') }}" class="text-decoration-none">Campus</a>
+        <a href="{{ url('app_home') }}" class="text-decoration-none">Accueil</a>
+        <a href="{{ path('app_mon_profil',  {'id': app.user.id }) }}" class="text-decoration-none">Mon Profil</a>
+        <a class="text-decoration-none" href="{{ path('app_logout') }}" title="Logout">
+            Logout (Hello {{ app.user }})
+        </a>
+    {% elseif is_granted('ROLE_USER') %}
+        <a href="{{ url('app_home') }}" class="text-decoration-none">Accueil</a>
+        <a href="{{ path('app_mon_profil', {'id': app.user.id } ) }}" class="text-decoration-none">Mon Profil</a>
+        <a class="text-decoration-none" href="{{ path('app_logout') }}" title="Logout">
+            Logout (Hello {{ app.user }})
+        </a>
+    {% else %}
+        <a class="text-decoration-none" href="{{ path('app_login') }}" title="Logout">
+            Login
+        </a>
+        <a class="text-decoration-none" href="{{ url('app_register') }}">S'inscrire</a>
+
+    {% endif %}
+
+
 
 {% endblock %}
 {% block content %}
@@ -46,11 +65,11 @@
                 <form action="post">
                     <div class="col-md-4">
                         <label>Entre :</label>
-                        <input type="date" class="form-control mr-sm-2" >
+                        <input type="date" class="form-control mr-sm-2">
                     </div>
                     <div class="col-md-6">
                         <label>Et :</label>
-                        <input type="date" class="form-control mr-sm-2" >
+                        <input type="date" class="form-control mr-sm-2">
 
                     </div>
                 </form>
@@ -82,7 +101,7 @@
             <button class="btn btn-success" style="width: 100% ;height: 100px"> Rechercer</button>
         </div>
     </div>
-    <div class="row p-1 d-flex align-items-center" style="border: solid 1px gray ; border-radius: 10px" >
+    <div class="row p-1 d-flex align-items-center" style="border: solid 1px gray ; border-radius: 10px">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -117,7 +136,8 @@
     </div>
     <div class="row">
         <div class="col-md-3 mt-3 d-flex justify-content-start">
-            <a href="{{ url('app_creation_sortie') }}"class="text-decoration-none btn btn-warning" > Créer une sortie</a>
+            <a href="{{ url('app_creation_sortie') }}" class="text-decoration-none btn btn-warning"> Créer une
+                sortie</a>
 
         </div>
     </div>

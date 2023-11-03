@@ -2,33 +2,23 @@
 
 namespace App\Controller;
 
-use App\Entity\Participant;
 use App\Repository\ParticipantRepository;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MonProfilController extends AbstractController
 {
 
-    #[Route('/mon_profil/{id}', name: 'app_mon_profil_1')]
+    #[Route('/mon_profil/{id}', name: 'app_mon_profil')]
     public function profimById2(ParticipantRepository $repository, $id): Response
     {
+
         $participant = $repository->find($id);
 
         return $this->render('mon_profil/mon_profil.html.twig', [
             'participant' => $participant
         ]);
-
-    }
-    #[Route('/mon_profil', name: 'app_mon_profil')]
-    public function profim(ParticipantRepository $repository, $id): Response
-    {
-
-        return $this->render('mon_profil/mon_profil.html.twig', );
 
     }
     /*

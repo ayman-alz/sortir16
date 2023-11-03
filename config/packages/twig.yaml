@@ -2,7 +2,7 @@ twig:
   default_path: '%kernel.project_dir%/templates'
   form_theme: 'bootstrap_5_layout.html.twig'
   globals:
-    app_images_wish_directory: 'uploads/images/profil'
+    app_image_profil_directory: 'uploads/images/profil'
 
 when@test:
   twig:

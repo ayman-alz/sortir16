@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Resgister Profil!{% endblock %}
+
+{% block header %}
+    
+    {% if app.user %}
+        <a class="text-decoration-none" href="{{ url('app_home') }}">Accueil</a>
+        <a class="text-decoration-none" href="{{ path('app_logout') }}" title="Logout">
+            Logout (Hello {{ app.user }})
+        </a>
+    {% endif %}
+
+
+{% endblock %}
+
+{% block content %}
+
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-6 mt-4">
+            <div class="square-div mt-4">
+                <div style=" width: 200px; height: 200px">
+                    {% if participant.image %}
+                        <img src="{{ asset(app_image_profil_directory ~ '/' ~ participant.image) }}"
+                             class="card-img-top img-fluid" alt="image du souhait">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6">
+
+            {{ form_errors(form) }}
+
+            {{ form_start(form) }}
+            {{ form_row(form.pseudo) }}
+            {{ form_row(form.nom) }}
+            {{ form_row(form.prenom) }}
+            {{ form_row(form.telephone) }}
+            {{ form_row(form.mail) }}
+            {{ form_row(form.campus) }}
+            {{ form_row(form.image) }}
+
+            <button type="submit" class="btn btn-success">Register</button>
+            <a class="text-decoration-none btn btn-danger"  href="{{ path('app_mon_profil', {'id':app.user.id} )}}">Annuler</a>
+
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+{% endblock %}
