@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ModifierSortieController!{% endblock %}
+
+{% block header %}
+    <a class="text-decoration-none" href="{{ url('app_home') }}">Accueil</a>
+    <a class="text-decoration-none" href="">Se déconnecter</a>
+
+{% endblock %}
+
+{% block content %}
+    <center><h1>Afficher une sortie</h1></center>
+
+    <form method="post" class="mt-4">
+        <div class="row d-flex justify-content-center align-items-start p-5">
+            <div class="col-md-6">
+                <label for="nom-de-sortie">Nom de la sortie </label>
+                <input type="text" id="nom-de-sortie" name="nom_nom" class="form-control" value="{{ sorties.nom }}"
+                       readonly>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="date-heure">Date et heure de la sortie </label>
+                            <input type="date" id="prenom" name="date-heure" class="form-control"
+                                   value="{{ sorties.dateHeureDebut | date('Y-m-d') }}" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="date-limite">Date limite d'inscription</label>
+                            <input type="date" id="date-inscription" name="date-inscription"
+                                   value="{{ sorties.dateLimiteInscription | date('Y-m-d') }}" class="form-control"
+                                   readonly>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="dure">Durée</label>
+                    <input type="number" id="dure" name="duree" value="{{ sorties.duree }}" class="form-control"
+                           readonly>
+                </div>
+                <div class="form-group">
+                    <label for="incription">Inscription et infos</label>
+                    <textarea id="inscription" name="infos"  class="form-control"
+                              readonly>  "{{ sorties.infosSortie }}  </textarea>
+                </div>
+                <div class="form-group">
+                    <label for="telephone">Campus </label>
+                    <input type="text" id="Campus" name="campus" class="form-control" value="{{ sorties.campus }}"
+                           readonly>
+                </div>
+                <div class="row p-1 mt-5 d-flex align-items-center" style="border: solid 1px darkgray ; border-radius: 10px">
+                    <p>
+                        <h4>Liste des participants inscrits</h4></p>
+                    <table class="table table-striped border-1">
+                        <thead>
+                        <tr>
+                            <th scope="col">Pseudo</th>
+                            <th scope="col">Nom</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if sorties.getParticipant is not empty %}
+                            {% for  participant  in sorties.getParticipant %}
+                                <tr>
+                                    <td>
+                                        {{ participant.pseudo }}
+                                    </td>
+                                    <td>
+                                        {{ participant.prenom }}  {{ participant.nom }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+
+
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    <label for="date"> Ville </label>
+                    <select disabled name="ville" class="form-select" aria-label="Default select example">
+                        <option selected> {{ sorties.lieu.ville.nom }} </option>
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nom">Lieu</label>
+                    <select disabled class="form-select" aria-label="Default select example" name="lieu" id="lieu">
+                        <option selected> {{ sorties.lieu.nom }} </option>
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rue">Rue </label>
+                    <input value="{{ sorties.lieu.rue }}" type="text" id="Rue" name="rue" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="code-postal">Code postle</label>
+                    <input value="{{ sorties.lieu.ville.codePostal }}" type="number" id="Codepostle" name="code_post"
+                           class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Latitude </label>
+                    <input value="{{ sorties.lieu.latitude }}" type="number" name="latitude" class="form-control"
+                           readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Longitude </label>
+                    <input value="{{ sorties.lieu.longitude }}" type="number" name="langitude" class="form-control"
+                           readonly>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </form>
+
+{% endblock %}

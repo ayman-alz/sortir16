@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Etat;
+use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -15,13 +16,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home',methods: ['GET', 'POST'])]
-    public function index(SortieRepository $sortieRepository,Request $request, PaginatorInterface $paginator,EntityManagerInterface $em): Response
+    public function index(SortieRepository $sortieRepository,
+                          EtatRepository $etatRepository,
+                          Request $request, PaginatorInterface $paginator,EntityManagerInterface $em): Response
     {
-        $this->updateEtat($sortieRepository,$em);
         $sorties = $sortieRepository->findAll();
+        $sorties = $this->updateEtat($em, $sorties,$etatRepository);
 
         $page = $request->query->getInt('page', 1);
-        $limit = 7;
+        $limit = 5;
 
         $pagination = $paginator->paginate(
             $sorties, // Sayfalayacağınız koleksiyon
@@ -35,10 +38,11 @@ class HomeController extends AbstractController
     }
 
     #[Route('/publier/{id}', name: 'app_home-publier',methods: ['GET', 'POST'])]
-    public function publierSortie(SortieRepository $sortieRepository,EntityManagerInterface $em,$id): Response
+    public function publierSortie(SortieRepository $sortieRepository,EtatRepository $etatRepository,EntityManagerInterface $em,$id): Response
     {
         $sortie = $sortieRepository->find($id);
-        $sortie->getEtat()->setLibelle(Etat::PUBLIER);
+        $etatPublier = $etatRepository->findByLibelle(Etat::PUBLIER);
+        $sortie->setEtat($etatPublier);
 
         $em->persist($sortie);
         $em->flush();
@@ -67,18 +71,30 @@ class HomeController extends AbstractController
         return $this->redirectToRoute('app_home');
     }
 
-    public function updateEtat(SortieRepository $sortieRepository,EntityManagerInterface $em ){
+    #[Route('/afficher/{id}', name:'app_afficiher_sortir',methods:['GET'])]
+    public function afficiherSortir($id,SortieRepository $sortieRepository)
+    {
+        $sorties = $sortieRepository->find($id);
+        return $this->render('creation_sortie/afficher_sortie.html.twig', [
+            'sorties' => $sorties,
+        ]);
+    }
 
-        $sorties = $sortieRepository->findAll();
+    public function updateEtat(EntityManagerInterface $em,$sorties ,EtatRepository $etatRepository){
+
+        $etatCloutere =$etatRepository->findByLibelle(Etat::TERMINE);
+
         foreach ($sorties as $sortie){
             if($sortie->getEtat()->getLibelle() === Etat::PUBLIER){
                 if ($sortie->getDateLimiteInscription() < new \DateTime()) {
-                    $sortie->getEtat()->setLibelle(Etat::TERMINE); // Çıkışın durumunu ayarla
+                    $sortie->setEtat($etatCloutere);
                     $em->persist($sortie);
-                    $em->flush();
                 }
             }
 
         }
+        $em->flush();
+
+        return $sorties;
     }
 }
