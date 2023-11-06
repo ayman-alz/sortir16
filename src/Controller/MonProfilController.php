@@ -7,7 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class MonProfilController extends AbstractController
+class
+
+MonProfilController extends AbstractController
 {
 
     #[Route('/mon_profil/{id}', name: 'app_mon_profil')]
