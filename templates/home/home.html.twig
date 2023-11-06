@@ -150,9 +150,9 @@
                             {% if app.user.id == sortie.organisateur.id %}
                                 {% if sortie.etat.libelle == constant('App\\Entity\\Etat::CREE') %}
                                     <a class="text-decoration-none" href="">Modifier -</a>
-                                    <a class="text-decoration-none" href="{{ path('app_home-publier', {'id': sortie.id}) }}">Publier</a>
+                                    <a class="text-decoration-none" href="">Publier</a>
                                 {% else %}
-                                    <a class="text-decoration-none" href="">Afficher -</a>
+                                    <a class="text-decoration-none" href="">Afficher</a>
                                     <a class="text-decoration-none" href="">Annuler</a>
                                 {% endif %}
                             {% else %}
