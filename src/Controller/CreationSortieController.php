@@ -41,7 +41,6 @@ class CreationSortieController extends AbstractController
         $villes = $villeRepository->findAll();
         $etat =$etatRepository->findByLibelle(Etat::CREE);
         $session = $request->getSession();
-
         $sortie= new Sortie();
         $sortie->setOrganisateur($this->getUser());
         $sortie->setCampus($this->getUser()->getCampus());
