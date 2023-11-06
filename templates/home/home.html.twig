@@ -152,19 +152,19 @@
                                     <a class="text-decoration-none" href="">Modifier -</a>
                                     <a class="text-decoration-none" href="{{ path('app_home-publier', {'id': sortie.id}) }}">Publier</a>
                                 {% else %}
-                                    <a class="text-decoration-none" href="">Afficher -</a>
-                                    <a class="text-decoration-none" href="">Annuler</a>
+                                    <a class="text-decoration-none" href="{{ path('app_afficiher_sortir', {'id': sortie.id}) }}">Afficher -</a>
+                                    <a class="text-decoration-none" href="{{ path('app_annuler_sortie', {'id': sortie.id}) }}">Annuler</a>
                                 {% endif %}
                             {% else %}
                                 {% if sortie.getByIdParticipant(app.user.id) == app.user %}
-                                    <a class="text-decoration-none" href=""> Afficher - </a>
+                                    <a class="text-decoration-none"href="{{ path('app_afficiher_sortir', {'id': sortie.id}) }}"> Afficher - </a>
                                     <a class="text-decoration-none" href="{{ path('app_home-desister', {'id': sortie.id}) }}"> S'désister</a>
                                 {% else %}
                                     {% if sortie.etat.libelle == constant('App\\Entity\\ETAT::PUBLIER') %}
-                                        <a class="text-decoration-none" href=""> Afficher - </a>
+                                        <a class="text-decoration-none"href="{{ path('app_afficiher_sortir', {'id': sortie.id}) }}"> Afficher - </a>
                                         <a class="text-decoration-none" href="{{ path('app_home-inscrir', {'id': sortie.id}) }}"> S'inscrirer</a>
                                     {% else %}
-                                        <a class="text-decoration-none" href=""> Afficher </a>
+                                        <a class="text-decoration-none"href="{{ path('app_afficiher_sortir', {'id': sortie.id}) }}" > Afficher </a>
                                     {% endif %}
                                 {% endif %}
 
