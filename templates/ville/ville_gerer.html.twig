@@ -3,9 +3,11 @@
 {% block title %}Ville Gérer!{% endblock %}
 
 {% block header %}
-    <a class="text-decoration-none" href="{{ url('app_home') }}">Accueil</a>
-    <a class="text-decoration-none" href="{{ url('app_mon_profil') }}">Mon Profil</a>
-    <a class="text-decoration-none" href="">Se déconnecter</a>
+    <a class="text-decoration-none"  href="{{ url('app_home') }}">Accueil</a>
+    <a class="text-decoration-none"  href="{{ path('app_mon_profil', {'id':app.user.id} )}}">Mon Profil</a>
+    <a class="nav-link" href="{{ path('app_logout') }}" title="Logout">
+        Logout (Hello {{ app.user }})
+    </a>
 
 {% endblock %}
 
@@ -32,35 +34,52 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th scope="col">Nom de la Campus</th>
-
+                    <th scope="col">Ville</th>
+                    <th scope="col">Code Postal</th>
                     <th scope="col">Actions</th>
+
                 </tr>
                 </thead>
                 <tbody>
-                <!-- Tablonun içeriği buraya eklenebilir -->
-                <tr>
-                    <td>Saint Herplain</td>
-
-                    <td>
-                        <button class="btn btn-primary">Modify</button>
-                        <button class="btn btn-danger">Suprimer</button>
-                    </td>
-                </tr>
-                <tr>
-                    <form>
+                {% for ville in villeGetAll %}
+                    <tr>
                         <td>
-                            <div class="form-group">
-                                <input placeholder="Ville Name" type="text" id="pseudo" name="ville" class="form-control" required>
-                            </div>
+                            <input type="text" value="{{ ville.nom }}" readonly
+                                   class="form-control-plaintext campus-name-input">
                         </td>
-
                         <td>
-                            <button class="btn btn-primary">Ajoute</button>
-
+                            <input type="text" value="{{ ville.codepostal }}" readonly
+                                   class="form-control-plaintext campus-name-input">
                         </td>
+                        <td>
+                            <a href="{{ path('app_create_ville_update', {'id': ville.id}) }}"
+                               class="btn btn-success modify-button">Modify</a>
+                            <a href="{{ path('app_create_ville_delete', {'id': ville.id}) }}" class="btn btn-danger">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                <tr>
+                    <form method="POST">
+                        {{ form_start(ville_form) }}
+
+                        <table>
+                            <tr>
+                                <td>
+                                    {{form_widget(ville_form.nom)}}
+
+                                </td>
+                                <td>
+                                    {{form_widget(ville_form.codePostal)}}
+
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-success">Ajouter</button>
+                                </td>
+                            </tr>
+                        </table>
+                        {{ form_end(ville_form) }}
                     </form>
-
                 </tr>
                 </tbody>
             </table>

@@ -3,65 +3,30 @@
 {% block title %}Resgister Profil!{% endblock %}
 
 {% block header %}
-    <a class="text-decoration-none"  href="{{ url('app_home') }}">Accueil</a>
+    <a class="text-decoration-none" href="{{ url('app_home') }}">Accueil</a>
     <a class="text-decoration-none" href="{{ url('app_login') }}">Login</a>
 {% endblock %}
 
 {% block content %}
 
 
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-6 mt-4">
-                <div class="square-div mt-4">
-                    <div style="background-color: black ; width: 200px; height: 200px" ></div>
-                </div>
-            </div>
-            <div class="col-12 col-lg-6">
-                <form method="post" class="mt-4">
-                    <div class="form-group">
-                        <label for="pseudo">Pseudo</label>
-                        <input type="text" id="pseudo" name="pseudo" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="prenom">Prénom</label>
-                        <input type="text" id="prenom" name="prenom" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="nom">Nom</label>
-                        <input type="text" id="nom" name="nom" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="telephone">Téléphone</label>
-                        <input type="text" id="telephone" name="telephone" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="motdepasse">Mot de Passe</label>
-                        <input type="password" id="motdepasse" name="motdepasse" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirmation">Confirmation Passe</label>
-                        <input type="password" id="confirmation" name="confirmation" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="campus">Campus</label>
-                        <select id="campus" name="campus" class="form-control">
-                            <option value="campus1">Campus 1</option>
-                            <option value="campus2">Campus 2</option>
-                            <option value="campus3">Campus 3</option>
-                        </select>
-                    </div>
-                    <div class="form-group mt-4">
-                        <label for="photo">Ma photo (optionnel)</label>
-                        <input type="file" id="photo" name="photo" class="form-control-file">
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-4">Enregistrer</button>
-                    <button type="button" class="btn btn-secondary mt-4 ms-4">Annuler</button>
-                </form>
-            </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-6">
+            <h2 style="text-align: center"> Sign Up</h2>
+            {{ form_errors(form) }}
+
+            {{ form_start(form) }}
+            {{ form_row(form.pseudo) }}
+            {{ form_row(form.mail) }}
+            {{ form_row(form.password, {
+                label: 'Password'
+            }) }}
+            <button type="submit" class="btn btn-primary">Register</button>
+            <a class="btn btn-danger" href="{{ url('app_home') }}">Annuler</a>
+
+            {{ form_end(form) }}
 
         </div>
+
+    </div>
 {% endblock %}

@@ -6,11 +6,17 @@ use App\Repository\EtatRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use http\Encoding\Stream\Debrotli;
 
 #[ORM\Entity(repositoryClass: EtatRepository::class)]
 class Etat
 {
+    public const CREE= 'Cree';
+    public const PUBLIER = 'Ouverte';
+    public const TERMINE = 'Cloturee';
+    public const ACTIVE = 'Activite en cours';
+    public const ANNULE = 'Annulee';
+    public const PASSE = 'Passee';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

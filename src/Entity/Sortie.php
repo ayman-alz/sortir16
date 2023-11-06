@@ -26,7 +26,7 @@ class Sortie
     private ?int $duree = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $dataLimiteInscription = null;
+    private ?\DateTimeInterface $dateLimiteInscription = null;
 
     #[ORM\Column]
     private ?int $nbInsciptionMax = null;
@@ -36,8 +36,6 @@ class Sortie
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     private ?Campus $campus = null;
-
-
 
     #[ORM\ManyToOne(inversedBy: 'sorties')]
     private ?Lieu $lieu = null;
@@ -97,14 +95,14 @@ class Sortie
         return $this;
     }
 
-    public function getDataLimiteInscription(): ?\DateTimeInterface
+    public function getDateLimiteInscription(): ?\DateTimeInterface
     {
-        return $this->dataLimiteInscription;
+        return $this->dateLimiteInscription;
     }
 
-    public function setDataLimiteInscription(\DateTimeInterface $dataLimiteInscription): static
+    public function setDateLimiteInscription(\DateTimeInterface $dateLimiteInscription): static
     {
-        $this->dataLimiteInscription = $dataLimiteInscription;
+        $this->dateLimiteInscription = $dateLimiteInscription;
 
         return $this;
     }
@@ -197,6 +195,18 @@ class Sortie
         }
 
         return $this;
+    }
+    public function getByIdParticipant($id): ?Participant
+    {
+        foreach ($this->participants as $participant)
+        {
+            if ($participant->getId() === $id)
+            {
+                return $participant;
+            }
+
+        }
+        return null;
     }
 
     public function removeParticipant(Participant $participant): static

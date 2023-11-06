@@ -5,9 +5,10 @@
 
 {% block header %}
     <a class="text-decoration-none"  href="{{ url('app_home') }}">Accueil</a>
-    <a class="text-decoration-none"  href="{{ path('app_mon_profil',{'id':participant.id}) }}">Mon Profil</a>
-    <a class="text-decoration-none"  href="">Se déconnecter</a>
-
+    <a class="text-decoration-none"  href="{{ path('app_mon_profil', {'id':app.user.id} )}}">Mon Profil</a>
+    <a class="nav-link" href="{{ path('app_logout') }}" title="Logout">
+        Logout (Hello {{ app.user }})
+    </a>
 {% endblock %}
 
 {% block content %}
@@ -15,28 +16,37 @@
         <h1 class="mb-5"> {{ participant.pseudo | capitalize}}</h1>
         <div class="row">
             <div class="col-md-4">
-                <img src="{{ asset('images/default-profil-image.jpg') }}" alt="User Photo" width="200" height="200">
+                <div class="square-div mt-4">
+                    <div style=" width: 200px; height: 200px">
+                        {% if participant.image %}
+                            <img src="{{ asset(app_image_profil_directory ~ '/' ~ participant.image) }}"
+                                 class="card-img-top img-fluid" alt="image du souhait">
+                        {% endif %}
+                    </div>
+                </div>
             </div>
             <div class="col-md-8">
                 <dl class="dl-horizontal">
                     <dt style="text-align: left;">Prenom:</dt>
-                    <dd><i>{{ participant.prenom | capitalize }}</i></dd>
+                    <dd><i>{{ participant.prenom | default('....') | capitalize }}</i></dd>
 
                     <dt style="text-align: left;">Nom:</dt>
-                    <dd><i>{{ participant.nom | capitalize }}</i></dd>
+                    <dd><i>{{ participant.nom | default('....') | capitalize }}</i></dd>
 
                     <dt style="text-align: left;">Téléphone:</dt>
-                    <dd><i>{{ participant.telephone | capitalize }}</i></dd>
+                    <dd><i>{{ participant.telephone | default('....') | capitalize}}</i></dd>
 
                     <dt style="text-align: left;">Email:</dt>
                     <dd><i>{{ participant.mail }}</i></dd>
 
                     <dt style="text-align: left;">Campus:</dt>
-                    <dd ><i>{{ participant.campus.nom | capitalize }}</i></dd>
+                    <dd ><i>{{  participant.campus.nom | default('....') | capitalize  }}</i></dd>
                 </dl>
             </div>
         </div>
         <a href="{{ url('app_home') }}" class="btn btn-primary">Home</a>
+
+        <a href="{{ path('app_register_detail', {'id':app.user.id} ) }}" class="btn btn-warning">Modify</a>
     </div>
 
 {% endblock %}

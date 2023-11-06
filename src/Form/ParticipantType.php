@@ -20,21 +20,13 @@ class ParticipantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('pseudo', TextType::class)
-            ->add('nom', TextType::class)
-            ->add('prenom', TextType::class)
-            ->add('telephone', TextType::class,[
-                'required' => false,
+            ->add('pseudo', TextType::class,
+            [
+                'label'=>'User Name'
             ])
-            ->add('campus', EntityType::class, [
-                'label' => 'Campus',
-                'class' => Campus::class,
-                'required'=>false,
-                'choice_label' => 'nom',
-                'placeholder'=> '--Choisir une campus--'
-            ])
+
             ->add('mail', EmailType::class)
-            ->add('motPasse', PasswordType::class, [
+            ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
@@ -49,8 +41,7 @@ class ParticipantType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-            ])
-            ->add('save', SubmitType::class, ['label' => 'Register']);
+            ]);
 
     }
 

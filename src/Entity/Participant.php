@@ -52,6 +52,14 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'organisateur', targetEntity: Sortie::class)]
     private Collection $sorties;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    public function __toString(): string
+    {
+        return  $this->getPseudo();
+    }
+
     public function __construct()
     {
         $this->sorties = new ArrayCollection();
@@ -227,6 +235,18 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
                 $sorty->setOrganisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

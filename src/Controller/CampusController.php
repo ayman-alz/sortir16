@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 #[Route('/admin')]
-
 class CampusController extends AbstractController
 {
     #[Route('/campus', name: 'app_create_campus', methods: ['POST','GET'])]
