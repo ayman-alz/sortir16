@@ -17,4 +17,16 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+
+
+
+    #[Route('/filter', name: 'app_filter')]
+    public function filter(FilterReposotory $reposotory)
+    {
+
+        $filters = $reposotory -> findSearch();
+        return $this->render('home/home.html.twig', [
+            'filters' => '$filters',
+        ]);
+    }
 }
