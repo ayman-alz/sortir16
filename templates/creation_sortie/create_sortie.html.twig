@@ -4,7 +4,7 @@
 
 {% block header %}
     <a class="text-decoration-none" href="{{ url('app_home') }}">Accueil</a>
-    <a class="text-decoration-none" href="{{ url('app_mon_profil') }}">Mon Profil</a>
+    <a href="{{ path('app_mon_profil',  {'id': app.user.id }) }}" class="text-decoration-none">Mon Profil</a>
     <a class="text-decoration-none" href="">Se déconnecter</a>
 
 {% endblock %}
@@ -14,93 +14,136 @@
 
 
     <center><h1>Créer une sortie</h1></center>
-
+    {{ form_start(form_sortie) }}
     <div class="row d-flex justify-content-center align-items-start p-5">
+
+
+        <div class="col-md-6 ">
+            {{ form_start(form_sortie) }}
+            {{ form_row(form_sortie.nom) }}
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6">
+                    {{ form_row(form_sortie.dateHeureDebut) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form_sortie.dateLimiteInscription) }}
+                </div>
+            </div>
+
+            {{ form_row(form_sortie.duree) }}
+            {{ form_row(form_sortie.nbInsciptionMax) }}
+            {{ form_row(form_sortie.infosSortie) }}
+
+            <div class="d-flex justify-content-evenly mt-4 ">
+                <button type="submit" class="btn btn-primary mt-4">Enregistrer</button>
+                <button type="submit" class="btn btn-secondary mt-4">Publier la sortie</button>
+                <button type="button" class="btn btn-danger mt-4 ">Annuler</button>
+
+            </div>
+        </div>
         <div class="col-md-6">
-            <label for="nom-de-sortie">Nom de la sortie </label>
-            <input type="text" id="nom-de-sortie" name="nom_nom" class="form-control" required>
-            <div class="form-group">
-                <label for="date">Date et heure de la sortie </label>
-                <input type="date" id="prenom" name="date-heure" class="form-control" required>
+            {{ form_row(form_sortie.campus) }}
+
+            {{ form_end(form_sortie) }}
+            <div class="row">
+                <div class="col-md-6">
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label for="city">Select a City:</label>
+                            <select name="city" id="city" class="form-control">
+                                <option value="">Select a City</option>
+                                {% for city in cities %}
+                                    <option value="{{ city.id }}"
+                                    >{{ city.nom }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
+
             </div>
+
+
+
             <div class="form-group">
-                <label for="nom">Date limite d'inscription</label>
-                <input type="date" id="date-inscription" name="date-inscription" class="form-control" required>
+                <div id="lieus_city" class="row mt-3">
+                    <div class="col-md-6">
+                        <h2>Lieus </h2>
+                        <select name="lieu" id="lieuList" class="form-control">
+                        </select>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="telephone">Telephone</label>
-                <input type="text" id="telephone" name="bombre-place" class="form-control" required>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div id="lieu-details" style="display: none;">
+                        <h2>Lieu Details</h2>
+                        <p id="lieu-name"></p>
+                        <p id="lieu-rue"></p>
+                        <p id="lieu-latitude"></p>
+                        <p id="lieu-longitude"></p>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="email">Durée</label>
-                <input type="number" id="email" name="duree" class="form-control" required>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <button id="addLieuButton" class="btn btn-success">+</button>
+                    <div id="addLieuModal" style="display: none;">
+                        <form method="post" action="{{ path('app_add_lieu') }}" class="mt-2">
+                            <div class="form-group">
+                                <label for="lieu_name">Lieu Name:</label>
+                                <input type="text" name="lieu_name" id="lieu_name" class="form-control"
+                                       placeholder="Lieu Name" required>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="rue">Rue:</label>
+                                <input type="text" name="rue" id="rue" class="form-control" placeholder="Rue" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="latitude">Latitude:</label>
+                                <input type="text" name="latitude" id="latitude" class="form-control"
+                                       placeholder="Latitude"
+                                       required>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="longitude">Longitude:</label>
+                                <input type="text" name="longitude" id="longitude" class="form-control"
+                                       placeholder="Longitude" required>
+
+                            </div>
+                            <div class="form-group">
+                                <label for="city">Select a City:</label>
+                                <select name="city" id="city" class="form-control" required>
+                                    <option value="">Select a City</option>
+                                    {% for city in cities %}
+                                        <option value="{{ city.id }}"
+                                        >{{ city.nom }}</option>
+                                    {% endfor %}
+                                </select>
+
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Ajouter</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="motdepasse">Inscription et infos</label>
-                <textarea id="inscription" name="infos" class="form-control" required>    </textarea>
-            </div>
+
 
         </div>
 
 
-        <div class="col-md-6">
-
-            <div class="form-group">
-                <label for="telephone">Campus </label>
-                <input type="text" id="Campus" name="campus" class="form-control" required>
-            </div>
 
 
-            <div class="form-group">
-                <label for="date"> Ville </label>
-                <select name="ville" class="form-select" aria-label="Default select example">
-                    <option selected>Choisissez une ville</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="nom">Lieu</label>
-                <select class="form-select" aria-label="Default select example" name="lieu" id="lieu">
-                    <option value="">Choissez une Lieu</option>
-                    <option value="dog">Rennes</option>
-                    <option value="cat">Paris</option>
-                    <option value="hamster">lskj</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="telephone">Rue </label>
-                <input type="text" id="Rue" name="rue" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Code postle</label>
-                <input type="number" id="Codepostle" name="code_post" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label>Latitude </label>
-                <input type="text" name="latitude" class="form-control" required>
-            </div>
-
-            <div class="form-group">
-                <label>Langitude </label>
-                <input type="text" name="langitude" class="form-control" required>
-            </div>
-        </div>
-
-
-        <div class="d-flex justify-content-evenly mt-4 ">
-            <button type="submit" class="btn btn-primary mt-4">Enregistrer</button>
-            <button type="submit" class="btn btn-secondary mt-4">Publier la sortie</button>
-            <button type="button" class="btn btn-danger mt-4 ">Annuler</button>
-
-        </div>
     </div>
 
 
-    </form>
+    {% block javascript %}
+    <script src="{{ asset('js/lieu.js') }}"></script>
 
-
-
+   {% endblock %}
 {% endblock %}
 

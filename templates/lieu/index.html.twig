@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LieuController!{% endblock %}
+
+{% block content %}
+
+    <h2 class="d-flex justify-content-center"> Gérer les Lieu</h2>
+    <div class="row p-5 d-flex justify-content-between  align-items-end">
+        {{ form_errors(form) }}
+
+        {{ form_start(form) }}
+        {{ form_row(form.nom) }}
+        {{ form_row(form.rue) }}
+        {{ form_row(form.latitude) }}
+        {{ form_row(form.longitude) }}
+        {{ form_row(form.ville) }}
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+        <a href="{{ path('app_creation_sortie') }}" class="btn btn-outline-secondary">Retour</a>
+
+        {{ form_end(form) }}
+
+    </div>
+{% endblock %}
