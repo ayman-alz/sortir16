@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Home!{% endblock %}
-
+{% set setSortieUser = app.user is defined and app.user is not null ? 'true' : 'false' %}
 {% block header %}
 
 
@@ -50,20 +50,20 @@
                 </form>
             </div>
 
-            <div class="row d-flex">
+            <div class="row ">
                 <form action="post">
                     <div class="col-md-6">
                         <label for="campus">Le nom de la sortie content :</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
 
                     </div>
                 </form>
             </div>
-            <div class="row d-flex" style="">
-                <form action="post">
-                    <div class="col-md-4">
+            <form action="post">
+                <div class="row d-flex" style="">
+                    <div class="col-md-6">
                         <label>Entre :</label>
                         <input type="date" class="form-control mr-sm-2">
                     </div>
@@ -72,9 +72,9 @@
                         <input type="date" class="form-control mr-sm-2">
 
                     </div>
-                </form>
-            </div>
 
+                </div>
+            </form>
 
         </div>
         <div class="col-md-5  ">
@@ -101,7 +101,7 @@
             <button class="btn btn-success" style="width: 100% ;height: 100px"> Rechercer</button>
         </div>
     </div>
-    <div class="row p-1 d-flex align-items-center" style="border: solid 1px gray ; border-radius: 10px">
+    <div class="row p-1 d-flex align-items-center" style="border: solid 1px darkgray ; border-radius: 10px">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -117,27 +117,82 @@
             </thead>
             <tbody>
             <!-- Tablonun içeriği buraya eklenebilir -->
-            <tr>
-                <td>Çıkış Adı 1</td>
-                <td>01.01.2023</td>
-                <td>15.12.2022</td>
-                <td>25/30</td>
-                <td>Aktif</td>
-                <td>John Doe</td>
-                <td>Mary Johnson</td>
-                <td>
-                    <button class="btn btn-primary">Modify</button>
-                    <button class="btn btn-danger">Suprimer</button>
-                </td>
-            </tr>
+            {% for sortie in pagination  %}
+                <tr>
+                    <td>{{ sortie.nom }}</td>
+                    <td>{{ sortie.dateHeureDebut | date('d-m-Y') }}</td>
+                    <td>{{ sortie.dateLimiteInscription | date('d-m-Y') }}</td>
+                    <td>{{ sortie.nbInsciptionMax }} /
+                        {% if sortie.getParticipant | length > 0 %}
+                            {{ sortie.getParticipant | length }}
+                        {% else %}
+                            <span> 0 </span>
+                        {% endif %}
+                    </td>
+                    <td>{{ sortie.etat.libelle }}</td>
+                    <td>
+                        {% if setSortieUser == 'true' %}
+                            {% if sortie.byIdParticipant(app.user.id) == app.user %}
+                                <span> x </span>
+                            {% else %}
+                                <span> </span>
+                            {% endif %}
+                        {% endif %}
 
+                    </td>
+                    <td>
+                        <a href="{{ path('app_mon_profil',  {'id': sortie.organisateur.id }) }}"
+                           class="text-decoration-none"> {{ sortie.organisateur.pseudo }} </a>
+
+                    </td>
+                    <td>
+                        {% if setSortieUser == 'true' %}
+                            {% if app.user.id == sortie.organisateur.id %}
+                                {% if sortie.etat.libelle == constant('App\\Entity\\Etat::CREE') %}
+                                    <a class="text-decoration-none" href="">Modifier -</a>
+                                    <a class="text-decoration-none" href="">Publier</a>
+                                {% else %}
+                                    <a class="text-decoration-none" href="">Afficher</a>
+                                    <a class="text-decoration-none" href="">Annuler</a>
+                                {% endif %}
+                            {% else %}
+                                {% if sortie.getByIdParticipant(app.user.id) == app.user %}
+                                    <a class="text-decoration-none" href=""> Afficher - </a>
+                                    <a class="text-decoration-none" href=""> S'désister</a>
+                                {% else %}
+                                    {% if sortie.etat.libelle == constant('App\\Entity\\ETAT::PUBLIER') %}
+                                        <a class="text-decoration-none" href=""> Afficher - </a>
+                                        <a class="text-decoration-none" href=""> S'inscrirer</a>
+                                    {% else %}
+                                        <a class="text-decoration-none" href=""> Afficher </a>
+                                    {% endif %}
+                                {% endif %}
+
+
+                            {% endif %}
+
+                        {% endif %}
+
+                    </td>
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
+        <div class="d-flex justify-content-center m-auto p-4">
+            <ul class="pagination">
+                {{ knp_pagination_render(pagination,'@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig') }}
+            </ul>
+        </div>
+
+
     </div>
     <div class="row">
         <div class="col-md-3 mt-3 d-flex justify-content-start">
-            <a href="{{ url('app_creation_sortie') }}" class="text-decoration-none btn btn-warning"> Créer une
-                sortie</a>
+            {% if app.user is not null %}
+                <a href="{{ url('app_creation_sortie') }}" class="text-decoration-none btn btn-warning"> Créer une
+                    sortie</a>
+            {% endif %}
+
 
         </div>
     </div>
