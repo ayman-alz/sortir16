@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Etat;
-use App\Entity\Sortie;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -11,8 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Date;
-use function Symfony\Component\Clock\now;
 
 
 class HomeController extends AbstractController
@@ -52,7 +49,7 @@ class HomeController extends AbstractController
     public function sinscrirSortir(SortieRepository $sortieRepository,EntityManagerInterface $em,$id): Response
     {
         $sortie = $sortieRepository->find($id);
-        $sortie->getEtat()->setLibelle(Etat::PUBLIER);
+        $sortie->addParticipant($this->getUser() );
 
         $em->persist($sortie);
         $em->flush();
@@ -63,8 +60,7 @@ class HomeController extends AbstractController
     public function sdesisterSortie(SortieRepository $sortieRepository,EntityManagerInterface $em,$id): Response
     {
         $sortie = $sortieRepository->find($id);
-        $sortie->getEtat()->setLibelle(Etat::PUBLIER);
-
+        $sortie->removeParticipant($this->getUser());
         $em->persist($sortie);
         $em->flush();
 
