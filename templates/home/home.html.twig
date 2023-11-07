@@ -1,9 +1,7 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Home!{% endblock %}
 {% set setSortieUser = app.user is defined and app.user is not null ? 'true' : 'false' %}
 {% block header %}
-
 
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ url('app_ville') }}" class="text-decoration-none">Viles</a>
@@ -24,14 +22,10 @@
             Login
         </a>
         <a class="text-decoration-none" href="{{ url('app_register') }}">S'inscrire</a>
-
     {% endif %}
-
-
 
 {% endblock %}
 {% block content %}
-
     <div class="row p-5 d-flex justify-content-between  align-items-end">
         <div class="col-md-5">
             <h4> Filtrer Les Sorties</h4>
@@ -49,7 +43,6 @@
                     </div>
                 </form>
             </div>
-
             <div class="row ">
                 <form action="post">
                     <div class="col-md-6">
@@ -57,7 +50,6 @@
                     </div>
                     <div class="col-md-8">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-
                     </div>
                 </form>
             </div>
@@ -70,12 +62,9 @@
                     <div class="col-md-6">
                         <label>Et :</label>
                         <input type="date" class="form-control mr-sm-2">
-
                     </div>
-
                 </div>
             </form>
-
         </div>
         <div class="col-md-5  ">
             <ul class="list-group">
@@ -138,41 +127,36 @@
                                 <span> </span>
                             {% endif %}
                         {% endif %}
-
                     </td>
                     <td>
                         <a href="{{ path('app_mon_profil',  {'id': sortie.organisateur.id }) }}"
                            class="text-decoration-none"> {{ sortie.organisateur.pseudo }} </a>
-
                     </td>
                     <td>
                         {% if setSortieUser == 'true' %}
                             {% if app.user.id == sortie.organisateur.id %}
                                 {% if sortie.etat.libelle == constant('App\\Entity\\Etat::CREE') %}
                                     <a class="text-decoration-none" href="">Modifier -</a>
-                                    <a class="text-decoration-none"  href="{{ path('app_home-publier', {'id': sortie.id}) }}">Publier</a>
+                                    <a class="text-decoration-none" href="{{ path('app_home-publier', {'id': sortie.id}) }}">Publier</a>
                                 {% else %}
-                                    <a class="text-decoration-none" href="">Afficher -</a>
-                                    <a class="text-decoration-none"  href="{{ path('app_annuler_sortie', {'id': sortie.id}) }}">Annuler</a>
+                                    <a class="text-decoration-none" href="{{ path('app_afficiher_sortir', {'id': sortie.id}) }}">Afficher -</a>
+                                    <a class="text-decoration-none" href="{{ path('app_annuler_sortie', {'id': sortie.id}) }}">Annuler</a>
                                 {% endif %}
                             {% else %}
                                 {% if sortie.getByIdParticipant(app.user.id) == app.user %}
-                                    <a class="text-decoration-none" href=""> Afficher - </a>
+                                    <a class="text-decoration-none"href="{{ path('app_afficiher_sortir', {'id': sortie.id}) }}"> Afficher - </a>
                                     <a class="text-decoration-none" href="{{ path('app_home-desister', {'id': sortie.id}) }}"> S'désister</a>
                                 {% else %}
                                     {% if sortie.etat.libelle == constant('App\\Entity\\ETAT::PUBLIER') %}
-                                        <a class="text-decoration-none" href=""> Afficher - </a>
+                                        <a class="text-decoration-none"href="{{ path('app_afficiher_sortir', {'id': sortie.id}) }}"> Afficher - </a>
                                         <a class="text-decoration-none" href="{{ path('app_home-inscrir', {'id': sortie.id}) }}"> S'inscrirer</a>
                                     {% else %}
-                                        <a class="text-decoration-none" href=""> Afficher </a>
+                                        <a class="text-decoration-none"href="{{ path('app_afficiher_sortir', {'id': sortie.id}) }}" > Afficher </a>
                                     {% endif %}
                                 {% endif %}
 
-
                             {% endif %}
-
                         {% endif %}
-
                     </td>
                 </tr>
             {% endfor %}
@@ -184,7 +168,6 @@
             </ul>
         </div>
 
-
     </div>
     <div class="row">
         <div class="col-md-3 mt-3 d-flex justify-content-start">
@@ -193,7 +176,7 @@
                     sortie</a>
             {% endif %}
 
-
         </div>
     </div>
 {% endblock %}
+ 
