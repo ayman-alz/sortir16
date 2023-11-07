@@ -4,7 +4,14 @@
 
 {% block header %}
     <a class="text-decoration-none" href="{{ url('app_home') }}">Accueil</a>
-    <a class="text-decoration-none" href="">Se déconnecter</a>
+    {% if app.user %}
+        <a class="text-decoration-none" href="{{ path('app_logout') }}" title="Logout">
+            Logout (Hello {{ app.user }})
+        </a>
+        {% else %}
+            <a class="text-decoration-none" href="{{ url('app_register') }}">S'inscrire</a>
+
+    {% endif %}
 
 {% endblock %}
 
@@ -95,8 +102,7 @@
                 <div class="form-group">
                     <label for="nom">Lieu</label>
                     <select disabled class="form-select" aria-label="Default select example" name="lieu" id="lieu">
-                        <option selected> {{ sorties.lieu.nom }} </option>
-
+                        <option selected> {{ sorties.lieu.nom}} </option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -119,6 +125,14 @@
                     <input value="{{ sorties.lieu.longitude }}" type="number" name="langitude" class="form-control"
                            readonly>
                 </div>
+                {% if app.user == sorties.organisateur%}
+                    <div class="d-flex justify-content-evenly mt-4 ">
+                        <a href="{{ path( 'app_modifier_sortie',{'id': sorties.id}) }}" class="btn btn-primary mt-4">Modify</a>
+                        <a href="{{ path('app_annuler_sortie', {'id': sorties.id}) }}" type="button" class="btn btn-danger mt-4 ">Annuler</a>
+
+                    </div>
+                {% endif %}
+
             </div>
 
 

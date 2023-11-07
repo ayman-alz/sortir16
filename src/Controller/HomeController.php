@@ -10,6 +10,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -41,6 +42,10 @@ class HomeController extends AbstractController
     public function publierSortie(SortieRepository $sortieRepository,EtatRepository $etatRepository,EntityManagerInterface $em,$id): Response
     {
         $sortie = $sortieRepository->find($id);
+        if ( $this->getUser()  !== $sortie->getOrganisateur())
+        {
+            throw $this->createAccessDeniedException();
+        }
         $etatPublier = $etatRepository->findByLibelle(Etat::PUBLIER);
         $sortie->setEtat($etatPublier);
 
