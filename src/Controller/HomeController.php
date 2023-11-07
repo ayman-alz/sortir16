@@ -18,10 +18,6 @@ class HomeController extends AbstractController
     public function index(SortieRepository $sortieRepository, Request $request, PaginatorInterface $paginator): Response
     {
 
-//
-//        $page = $request->query->getInt('page', 1);
-//        $limit = 7;
-
         $sortiefiltre = new SortieFiltre();
         $form = $this->createForm(SearchFormType::class, $sortiefiltre);
         $form->handleRequest($request);
@@ -39,6 +35,8 @@ class HomeController extends AbstractController
             'sorties' => $sorties,
             'filterForm' => $form
         ]);
+
+
     }
 
 

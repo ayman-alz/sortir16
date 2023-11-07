@@ -14,6 +14,8 @@ class FilterController extends AbstractController
     public function list(Request $request,  FilterReposotory $reposotory)
     {
 
+
+
         $sortiefiltre = [];
         $sortiefiltre = new SortieFiltre();
         $form = $this->createForm(SearchFormType::class, $sortiefiltre);
@@ -23,6 +25,7 @@ class FilterController extends AbstractController
         {
             $filters = $reposotory -> findSearch();
         }
+
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Form\Model;
 
 use App\Entity\Campus;
+use phpDocumentor\Reflection\Types\Boolean;
 use phpDocumentor\Reflection\Types\Integer;
 
 class SortieFiltre
@@ -10,14 +11,64 @@ class SortieFiltre
 
 
 
-    private ?Campus $campus;
+    private ?Campus $campus = null ;
 
-    private ?string $nom ;
+    private ?string $nom = null ;
 
 
-    private ?\DateTime $date_heure_debut ;
+    private ?\DateTime $date_heure_debut = null ;
 
-    private ?\DateTime $data_limite_inscription ;
+    private ?\DateTime $data_limite_inscription = null ;
+
+
+    private ?bool $organisateur = null ;
+
+    private ?bool $inscrit = null;
+
+    private ?bool $noninscrit = null;
+
+    private ?bool $soireepasse = null ;
+
+    public function getNoninscrit(): ?bool
+    {
+        return $this->noninscrit;
+    }
+
+    public function setNoninscrit(?bool $noninscrit): void
+    {
+        $this->noninscrit = $noninscrit;
+    }
+
+    public function getSoireepasse(): ?bool
+    {
+        return $this->soireepasse;
+    }
+
+    public function setSoireepasse(?bool $soireepasse): void
+    {
+        $this->soireepasse = $soireepasse;
+    }
+
+    public function getOrganisateur(): ?bool
+    {
+        return $this->organisateur;
+    }
+
+    public function setOrganisateur(?bool $organisateur): void
+    {
+        $this->organisateur = $organisateur;
+    }
+
+    public function getInscrit(): ?bool
+    {
+        return $this->inscrit;
+    }
+
+    public function setInscrit(?bool $inscrit): void
+    {
+        $this->inscrit = $inscrit;
+    }
+
 
     public function getCampus(): ?Campus
     {

@@ -10,6 +10,7 @@ use Doctrine\DBAL\Types\IntegerType;
 use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -38,7 +39,28 @@ class SearchFormType extends AbstractType
                 'label' => 'data_limite_inscription' ,
                 'required' => false])
 
+            ->add('organisateur', CheckboxType::class, [
+                'label' => 'oragnisateur',
+                'required' => false,
+            ])
+            ->add('inscrit', CheckboxType::class, [
+                'label' => 'est inscrit',
+                'required' => false,
+            ])
+            ->add('noninscrit', CheckboxType::class, [
+                'label' => 'nest pas inscrit',
+                'required' => false,
+            ])
+
+            ->add('soireepasse', CheckboxType::class, [
+                'label' => 'soiree passee',
+                'required' => false,
+            ])
+
             ->add('submit' , SubmitType::class )
+
+
+
 
         ;
     }

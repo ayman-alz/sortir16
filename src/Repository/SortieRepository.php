@@ -6,6 +6,7 @@ use App\Entity\Sortie;
 use App\Form\Model\SortieFiltre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bundle\SecurityBundle\Security;
 
 /**
  * @extends ServiceEntityRepository<Sortie>
@@ -17,7 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class SortieRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private Security $security)
     {
         parent::__construct($registry, Sortie::class);
     }
@@ -28,6 +29,25 @@ class SortieRepository extends ServiceEntityRepository
         if($sortieFiltre->getCampus()){
             $qb ->andWhere('s.campus = :campus')->setParameter('campus', $sortieFiltre->getCampus());
         }
+
+        if ($sortieFiltre -> getNom()) {
+            $qb -> andWhere('s.nom = :nom') ->setParameter('nom' , $sortieFiltre ->getNom() );
+        }
+        if ($sortieFiltre->getDateHeureDebut()) {
+            $qb ->andWhere('s.dateHeureDebut = :date_heure_debut') ->setParameter('date_heure_debut' , $sortieFiltre ->getDateHeureDebut() ) ;
+        }
+        if ($sortieFiltre ->getDataLimiteInscription()) {
+            $qb ->andWhere('s.dateLimiteInscription = :date_limite_inscription') ->setParameter('date_limite_inscription' , $sortieFiltre ->getDataLimiteInscription()) ;
+        }
+        if ($sortieFiltre ->getOrganisateur()) {
+            $qb ->andWhere('s.organisateur = :organisateur') ->setParameter('organisateur' , $this->security->getUser());
+        }
+        if ($sortieFiltre ->getInscrit()) {
+            $qb ->andWhere('s.inscrit = :inscrit') ->setParameter('inscrit' , $this ->security->getUser());
+        }
+
+
+
 
         return $qb->getQuery()->getResult();
     }
