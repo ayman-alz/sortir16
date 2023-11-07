@@ -39,16 +39,20 @@ class CreationSortieController extends AbstractController
     ): Response
     {
         $villes = $villeRepository->findAll();
-        $etat =$etatRepository->findByLibelle(Etat::CREE);
+        $etatCree =$etatRepository->findByLibelle(Etat::CREE);
+        $etatPublier =$etatRepository->findByLibelle(Etat::PUBLIER);
         $session = $request->getSession();
-
         $sortie= new Sortie();
         $sortie->setOrganisateur($this->getUser());
         $sortie->setCampus($this->getUser()->getCampus());
-        $sortie->setEtat($etat);
+        if ($request->request->has('register')) {
+            $sortie->setEtat($etatCree);
+        }
+        if ($request->request->has('publier')) {
+            $sortie->setEtat($etatPublier);
+        }
         $form_sortie = $this->createForm(SortieFormType::class,$sortie);
         $form_sortie->handleRequest($request);
-
 
         if ($form_sortie->isSubmitted() && $form_sortie->isValid()) {
             $lieuId = $session->get('lieu');

@@ -3,48 +3,75 @@
 {% block title %}Hello ModifierSortieController!{% endblock %}
 
 {% block header %}
-    <a class="text-decoration-none"  href="{{ url('app_home') }}">Accueil</a>
-    <a class="text-decoration-none"  href="">Se déconnecter</a>
-
+    <a class="text-decoration-none" href="{{ url('app_home') }}">Accueil</a>
+    <a class="text-decoration-none" href="{{ path('app_logout') }}" title="Logout">
+        Logout (Hello {{ app.user }})
+    </a>
 {% endblock %}
 
 {% block content %}
-    <center>  <h1>Modifier une sortie</h1></center>
+    <center><h1>Modifier une sortie</h1></center>
 
-<div class="row d-flex justify-content-center align-items-start p-5">
+    <div class="row d-flex justify-content-center align-items-start p-5">
 
 
-    <div class="col-md-6 ">
-        {{ form_start(form_sortie) }}
-        {{ form_row(form_sortie.nom) }}
-        <div class="row d-flex justify-content-center">
-            <div class="col-md-6">
-                {{ form_row(form_sortie.dateHeureDebut) }}
+        <div class="col-md-6 ">
+            {{ form_start(form_sortie) }}
+            {{ form_row(form_sortie.nom) }}
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-6">
+                    {{ form_row(form_sortie.dateHeureDebut) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form_sortie.dateLimiteInscription) }}
+                </div>
             </div>
-            <div class="col-md-6">
-                {{ form_row(form_sortie.dateLimiteInscription) }}
+
+            {{ form_row(form_sortie.duree) }}
+            {{ form_row(form_sortie.nbInsciptionMax) }}
+            {{ form_row(form_sortie.infosSortie) }}
+            <div class="d-flex justify-content-evenly mt-4 ">
+                <button type="submit" class="btn btn-primary mt-4">Enregistrer</button>
+                <a href="{{ path('app_home-publier', {'id': sortie.id}) }}" class="btn btn-secondary mt-4">Publier la
+                    sortie </a>
+                <a href="{{ path('app_suprimer_sortie', {'id': sortie.id}) }}" class="btn btn-danger mt-4 ">Supprimer la
+                    sortie</a>
+                <button type="button" class="btn btn-warning mt-4 ">Annuler</button>
+
+
             </div>
         </div>
-
-        {{ form_row(form_sortie.duree) }}
-        {{ form_row(form_sortie.nbInsciptionMax) }}
-        {{ form_row(form_sortie.infosSortie) }}
-
-        <div class="d-flex justify-content-evenly mt-4 ">
-            <button type="submit" class="btn btn-primary mt-4">Enregistrer</button>
-            <button type="submit" class="btn btn-secondary mt-4">Publier la sortie </button>
-            <button type="button" class="btn btn-success mt-4 ">Supprimer la sortie</button>
-            <button type="button" class="btn btn-danger mt-4 ">Annuler</button>
+        <div class="col-md-6">
+            {{ form_row(form_sortie.campus) }}
 
 
-        </div>
-    </div>
-    <div class="col-md-6">
-        {{ form_row(form_sortie.campus) }}
+            {{ form_row(form_sortie.lieu.nom) }}
+            {{ form_row(form_sortie.lieu.rue) }}
+            <div class="row">
+                <div class="col-md-6">
 
-        {{ form_end(form_sortie) }}
+                    {{ form_row(form_sortie.lieu.latitude) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form_sortie.lieu.longitude) }}
 
-        {% if sortie.lieu is not empty %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+
+                    {{ form_row(form_sortie.lieu.ville) }}
+                </div>
+                <div class="col-md-6">
+
+
+                </div>
+            </div>
+
+
+            {{ form_end(form_sortie) }}
+
+            {#     {% if sortie.lieu is not empty %}
 
             <div class="row">
                 <div class="col-md-6">
@@ -133,18 +160,16 @@
                 </div>
             </div>
         </div>
+            #}
+
+        </div>
 
 
     </div>
 
 
-
-
-</div>
-
-
-{% block javascript %}
-<script src="{{ asset('js/lieu.js') }}"></script>
+    {% block javascript %}
+    <script src="{{ asset('js/lieu.js') }}"></script>
 {% endblock %}
 
 
