@@ -8,7 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 
 
 
-class UserFixture extends Fixture
+class UserFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {

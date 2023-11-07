@@ -12,49 +12,51 @@ class SortieFiltre
 
     private ?Campus $campus;
 
-    private string $nom ;
+    private ?string $nom ;
 
 
-    private \DateTime $date_heure_debut ;
+    private ?\DateTime $date_heure_debut ;
 
-    private \DateTime $data_limite_inscription ;
+    private ?\DateTime $data_limite_inscription ;
 
-    public function getCampusId(): string
+    public function getCampus(): ?Campus
     {
-        return $this->campus_id;
+        return $this->campus;
     }
 
-    public function setCampusId(string $campus_id): void
+    public function setCampus(?Campus $campus): void
     {
-        $this->campus_id = $campus_id;
+        $this->campus = $campus;
     }
 
-    public function getNom(): string
+
+
+    public function getNom(): ?string
     {
         return $this->nom;
     }
 
-    public function setNom(string $nom): void
+    public function setNom(?string $nom): void
     {
         $this->nom = $nom;
     }
 
-    public function getDateHeureDebut(): \DateTime
+    public function getDateHeureDebut(): ?\DateTime
     {
         return $this->date_heure_debut;
     }
 
-    public function setDateHeureDebut(\DateTime $date_heure_debut): void
+    public function setDateHeureDebut(?\DateTime $date_heure_debut): void
     {
         $this->date_heure_debut = $date_heure_debut;
     }
 
-    public function getDataLimiteInscription(): \DateTime
+    public function getDataLimiteInscription(): ?\DateTime
     {
         return $this->data_limite_inscription;
     }
 
-    public function setDataLimiteInscription(\DateTime $data_limite_inscription): void
+    public function setDataLimiteInscription(?\DateTime $data_limite_inscription): void
     {
         $this->data_limite_inscription = $data_limite_inscription;
     }
