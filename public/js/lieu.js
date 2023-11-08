@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     citySelect.addEventListener('change', function () {
         const selectedCityId = this.value;
 
-        fetch(`http://localhost/sortir16/public/get_lieu_names?cityId=${selectedCityId}`)
+        fetch(`http://localhost/sortie-project/public/get_lieu_names?cityId=${selectedCityId}`)
             .then(response => response.json())
             .then(data => {
                 lieuList.innerHTML = '';
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     lieuList.addEventListener('change', function (event) {
         const selecteLieuId = this.value;
-        fetch(`http://localhost/sortir16/public/get_lieu_details?lieuId=${selecteLieuId}`)
+        fetch(`http://localhost/sortie-project/public/get_lieu_details?lieuId=${selecteLieuId}`)
             .then(response => response.json())
             .then(data => {
                 lieuName.textContent = `Name: ${data.nom}`;
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 lieuDetails.style.display = 'block';
             });
 
-        fetch('http://localhost/sortir16/public/get_Lieu', {
+        fetch('http://localhost/sortie-project/public/get_Lieu', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

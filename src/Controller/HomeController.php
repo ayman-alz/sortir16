@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Etat;
+use App\Form\Model\SortieFilter;
+use App\Form\SearchFormType;
 use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home',methods: ['GET', 'POST'])]
+ /*   #[Route('/', name: 'app_home',methods: ['GET', 'POST'])]
     public function index(SortieRepository $sortieRepository,
                           EtatRepository $etatRepository,
                           Request $request, PaginatorInterface $paginator,EntityManagerInterface $em): Response
@@ -36,7 +38,35 @@ class HomeController extends AbstractController
             'sorties' => $sorties,
             'pagination' => $pagination
         ]);
+    }*/
+    #[Route('/', name: 'app_home', methods: ['GET', 'POST'])]
+    public function filterIndex(SortieRepository $sortieRepository,EntityManagerInterface $em, EtatRepository $etatRepository, Request $request, PaginatorInterface $paginator): Response
+    {
+
+        $sortieFilter = new SortieFilter();
+        $form = $this->createForm(SearchFormType::class, $sortieFilter);
+        $form->handleRequest($request);
+        dump($form);
+        $sorties = $sortieRepository->getWithFilters($sortieFilter);
+        $sorties = $this->updateEtat($em, $sorties,$etatRepository);
+
+
+        $page = $request->query->getInt('page', 1);
+        $limit = 5;
+
+        $pagination = $paginator->paginate(
+            $sorties, // Sayfalayacağınız koleksiyon
+            $page,    // Sayfa numarası
+            $limit    // Sayfa başına sonuç sayısı
+        );
+        return $this->render('home/home.html.twig', [
+            'pagination' => $pagination,
+            'filterForm' => $form
+        ]);
+
+
     }
+
 
     #[Route('/publier/{id}', name: 'app_home-publier',methods: ['GET', 'POST'])]
     public function publierSortie(SortieRepository $sortieRepository,EtatRepository $etatRepository,EntityManagerInterface $em,$id): Response
@@ -88,6 +118,9 @@ class HomeController extends AbstractController
     public function updateEtat(EntityManagerInterface $em,$sorties ,EtatRepository $etatRepository){
 
         $etatCloutere =$etatRepository->findByLibelle(Etat::TERMINE);
+        $etatPasse =$etatRepository->findByLibelle(Etat::PASSE);
+        $etatEncors =$etatRepository->findByLibelle(Etat::ACTIVE);
+
 
         foreach ($sorties as $sortie){
             if($sortie->getEtat()->getLibelle() === Etat::PUBLIER){
@@ -95,9 +128,18 @@ class HomeController extends AbstractController
                     $sortie->setEtat($etatCloutere);
                     $em->persist($sortie);
                 }
+                if ($sortie->getDateHeureDebut() < new \DateTime()) {
+                    $sortie->setEtat($etatPasse);
+                    $em->persist($sortie);
+                }
+                if ($sortie->getDateHeureDebut() == new \DateTime()) {
+                    $sortie->setEtat($etatEncors);
+                    $em->persist($sortie);
+                }
             }
 
         }
+
         $em->flush();
 
         return $sorties;

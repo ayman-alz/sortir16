@@ -8,7 +8,6 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Campus>
- *
  * @method Campus|null find($id, $lockMode = null, $lockVersion = null)
  * @method Campus|null findOneBy(array $criteria, array $orderBy = null)
  * @method Campus[]    findAll()

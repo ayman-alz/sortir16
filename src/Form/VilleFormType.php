@@ -23,7 +23,7 @@ class VilleFormType extends AbstractType
             ->add('codePostal',TextType::class,[
                 'label'=>'',
                 'attr' => array(
-                    'placeholder' => 'Campus Name'
+                    'placeholder' => 'Code Postal'
                 ),            'required'=> true
             ]);
     }

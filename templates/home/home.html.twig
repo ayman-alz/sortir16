@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
+
 {% block title %}Home!{% endblock %}
 {% set setSortieUser = app.user is defined and app.user is not null ? 'true' : 'false' %}
 {% block header %}
+
 
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ url('app_ville') }}" class="text-decoration-none">Viles</a>
@@ -22,73 +24,70 @@
             Login
         </a>
         <a class="text-decoration-none" href="{{ url('app_register') }}">S'inscrire</a>
+
     {% endif %}
+
+
 
 {% endblock %}
 {% block content %}
+
     <div class="row p-5 d-flex justify-content-between  align-items-end">
         <div class="col-md-5">
             <h4> Filtrer Les Sorties</h4>
             <div class="row">
-                <form action="post">
-                    <div class="col-md-4">
-                        <label for="campus">Campus</label>
-                    </div>
-                    <div class="col-md-8">
-                        <select id="campus" name="campus" class="form-control">
-                            <option value="campus1">Campus 1</option>
-                            <option value="campus2">Campus 2</option>
-                            <option value="campus3">Campus 3</option>
-                        </select>
-                    </div>
-                </form>
+                {{ form_start(filterForm) }}
+                <div class="col-md-4">
+                    <label for="campus">Campus</label>
+                </div>
+                {{ form_widget(filterForm.campus) }}
+
             </div>
+
             <div class="row ">
-                <form action="post">
                     <div class="col-md-6">
                         <label for="campus">Le nom de la sortie content :</label>
                     </div>
                     <div class="col-md-8">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        {{ form_widget(filterForm.nom, {'attr': {'class': 'form-control mr-sm-2', 'type': 'search', 'placeholder': 'Search', 'aria-label': 'Search'}}) }}
                     </div>
-                </form>
             </div>
-            <form action="post">
-                <div class="row d-flex" style="">
-                    <div class="col-md-6">
-                        <label>Entre :</label>
-                        <input type="date" class="form-control mr-sm-2">
-                    </div>
-                    <div class="col-md-6">
-                        <label>Et :</label>
-                        <input type="date" class="form-control mr-sm-2">
-                    </div>
+            <div class="row d-flex" style="">
+                <div class="col-md-6">
+                    <label>Entre :</label>
+                    {{ form_widget(filterForm.date_heure_debut) }}
                 </div>
-            </form>
+                <div class="col-md-6">
+                    <label>Et :</label>
+                    {{ form_widget(filterForm.data_limite_inscription) }}
+
+                </div>
+
+            </div>
+
         </div>
         <div class="col-md-5  ">
             <ul class="list-group">
                 <li class="list-group-item">
-                    <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">
-                    <label class="form-check-label" for="firstCheckbox">First checkbox</label>
+                    {{ form_widget(filterForm.organisateur) }}
                 </li>
                 <li class="list-group-item">
-                    <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox">
-                    <label class="form-check-label" for="secondCheckbox">Second checkbox</label>
+                    {{ form_widget(filterForm.inscrit) }}
                 </li>
                 <li class="list-group-item">
-                    <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">
-                    <label class="form-check-label" for="thirdCheckbox">Third checkbox</label>
+                    {{ form_widget(filterForm.noninscrit) }}
                 </li>
                 <li class="list-group-item">
-                    <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">
-                    <label class="form-check-label" for="thirdCheckbox">Third checkbox</label>
+                    {{ form_widget(filterForm.soireepasse) }}
                 </li>
             </ul>
         </div>
         <div class="col-md-2">
-            <button class="btn btn-success" style="width: 100% ;height: 100px"> Rechercer</button>
+            {{ form_widget(filterForm.submit) }}
         </div>
+
+        {{ form_end(filterForm) }}
+
     </div>
     <div class="row p-1 d-flex align-items-center" style="border: solid 1px darkgray ; border-radius: 10px">
         <table class="table table-striped">
@@ -127,10 +126,12 @@
                                 <span> </span>
                             {% endif %}
                         {% endif %}
+
                     </td>
                     <td>
                         <a href="{{ path('app_mon_profil',  {'id': sortie.organisateur.id }) }}"
                            class="text-decoration-none"> {{ sortie.organisateur.pseudo }} </a>
+
                     </td>
                     <td>
                         {% if setSortieUser == 'true' %}
@@ -173,8 +174,11 @@
                                     {% endif %}
                                 {% endif %}
 
+
                             {% endif %}
+
                         {% endif %}
+
                     </td>
                 </tr>
             {% endfor %}
@@ -186,6 +190,7 @@
             </ul>
         </div>
 
+
     </div>
     <div class="row">
         <div class="col-md-3 mt-3 d-flex justify-content-start">
@@ -194,7 +199,7 @@
                     sortie</a>
             {% endif %}
 
+
         </div>
     </div>
 {% endblock %}
- 
