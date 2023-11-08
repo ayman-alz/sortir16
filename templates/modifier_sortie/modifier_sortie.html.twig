@@ -31,10 +31,10 @@
             {{ form_row(form_sortie.nbInsciptionMax) }}
             {{ form_row(form_sortie.infosSortie) }}
             <div class="d-flex justify-content-evenly mt-4 ">
-                <button type="submit" class="btn btn-primary mt-4">Enregistrer</button>
-                <a href="{{ path('app_home-publier', {'id': sortie.id}) }}" class="btn btn-secondary mt-4">Publier la
-                    sortie </a>
-{#                <a href="{{ path('app_suprimer_sortie', {'id': sortie.id}) }}" class="btn btn-danger mt-4 ">Supprimer la#}
+                <button type="submit" name="register" class="btn btn-primary mt-4">Enregistrer</button>
+                <button type="submit" name="publier" class="btn btn-secondary mt-4">Publier la
+                    sortie </button>
+                 <a href="{{ path('app_suprimer_sortie', {'id': sortie.id}) }}" class="btn btn-danger mt-4 ">Supprimer la
                     sortie</a>
                 <button type="button" class="btn btn-warning mt-4 ">Annuler</button>
 

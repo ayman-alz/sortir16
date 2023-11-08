@@ -19,15 +19,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class CreationSortieController extends AbstractController
 {
 
-    #[Route('/get_Lieu', name: 'app_sortie_getId')]
-    #[IsGranted('ROLE_USER', statusCode: 404, message: 'NOT ACCES ')]
-    public function get(Request $request)
-    {
-        $session = $request->getSession();
-        $lieuId = $request->request->get('lieuId');
-        $session->set('lieu', $lieuId);
-        return new Response('');
-    }
+
 
     #[IsGranted('ROLE_USER', statusCode: 404, message: 'NOT ACCES ')]
     #[Route('/creation_sortie', name: 'app_creation_sortie',methods: ['GET','POST'])]
@@ -74,5 +66,13 @@ class CreationSortieController extends AbstractController
         ]);
     }
 
-
+    #[Route('/get_Lieu', name: 'app_sortie_getId')]
+    #[IsGranted('ROLE_USER', statusCode: 404, message: 'NOT ACCES ')]
+    public function get(Request $request)
+    {
+        $session = $request->getSession();
+        $lieuId = $request->request->get('lieuId');
+        $session->set('lieu', $lieuId);
+        return new Response('');
+    }
 }
