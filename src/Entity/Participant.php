@@ -46,6 +46,9 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?bool $actif = null;
 
+
+    #[ORM\ManyToMany(targetEntity: Sortie::class, mappedBy: 'participants')]
+    private Collection $inscrits;
     #[ORM\ManyToOne(inversedBy: 'participants')]
     private ?Campus $campus = null;
 
@@ -249,5 +252,14 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
         $this->image = $image;
 
         return $this;
+    }
+    public function getInscrits(): Collection
+    {
+        return $this->inscrits;
+    }
+
+    public function setInscrits(Collection $inscrits): void
+    {
+        $this->inscrits = $inscrits;
     }
 }
