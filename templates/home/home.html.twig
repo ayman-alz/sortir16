@@ -32,78 +32,62 @@
 {% endblock %}
 {% block content %}
 
-    {{ form(filterForm) }}
+    <div class="row p-5 d-flex justify-content-between  align-items-end">
+        <div class="col-md-5">
+            <h4> Filtrer Les Sorties</h4>
+            <div class="row">
+                {{ form_start(filterForm) }}
+                <div class="col-md-4">
+                    <label for="campus">Campus</label>
+                </div>
+                {{ form_widget(filterForm.campus) }}
 
+            </div>
 
+            <div class="row ">
+                    <div class="col-md-6">
+                        <label for="campus">Le nom de la sortie content :</label>
+                    </div>
+                    <div class="col-md-8">
+                        {{ form_widget(filterForm.nom, {'attr': {'class': 'form-control mr-sm-2', 'type': 'search', 'placeholder': 'Search', 'aria-label': 'Search'}}) }}
+                    </div>
+            </div>
+            <div class="row d-flex" style="">
+                <div class="col-md-6">
+                    <label>Entre :</label>
+                    {{ form_widget(filterForm.date_heure_debut) }}
+                </div>
+                <div class="col-md-6">
+                    <label>Et :</label>
+                    {{ form_widget(filterForm.data_limite_inscription) }}
 
-{#    <div class="row p-5 d-flex justify-content-between  align-items-end">#}
-{#        <div class="col-md-5">#}
-{#            <h4> Filtrer Les Sorties</h4>#}
-{#            <div class="row">#}
-{#                <form action="post">#}
-{#                    <div class="col-md-4">#}
-{#                        <label for="campus">Campus</label>#}
-{#                    </div>#}
-{#                    <div class="col-md-8">#}
-{#                        <select id="campus" name="campus" class="form-control">#}
-{#                            <option value="campus1">Campus 1</option>#}
-{#                            <option value="campus2">Campus 2</option>#}
-{#                            <option value="campus3">Campus 3</option>#}
-{#                        </select>#}
-{#                    </div>#}
-{#                </form>#}
-{#            </div>#}
+                </div>
 
-{#            <div class="row ">#}
-{#                <form action="post">#}
-{#                    <div class="col-md-6">#}
-{#                        <label for="campus">Le nom de la sortie content :</label>#}
-{#                    </div>#}
-{#                    <div class="col-md-8">#}
-{#                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">#}
+            </div>
 
-{#                    </div>#}
-{#                </form>#}
-{#            </div>#}
-{#            <form action="post">#}
-{#                <div class="row d-flex" style="">#}
-{#                    <div class="col-md-6">#}
-{#                        <label>Entre :</label>#}
-{#                        <input type="date" class="form-control mr-sm-2">#}
-{#                    </div>#}
-{#                    <div class="col-md-6">#}
-{#                        <label>Et :</label>#}
-{#                        <input type="date" class="form-control mr-sm-2">#}
+        </div>
+        <div class="col-md-5  ">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    {{ form_widget(filterForm.organisateur) }}
+                </li>
+                <li class="list-group-item">
+                    {{ form_widget(filterForm.inscrit) }}
+                </li>
+                <li class="list-group-item">
+                    {{ form_widget(filterForm.noninscrit) }}
+                </li>
+                <li class="list-group-item">
+                    {{ form_widget(filterForm.soireepasse) }}
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-2">
+            {{ form_widget(filterForm.submit) }}
+        </div>
 
-{#                    </div>#}
+        {{ form_end(filterForm) }}
 
-{#                </div>#}
-{#            </form>#}
-
-{#        </div>#}
-{#        <div class="col-md-5  ">#}
-{#            <ul class="list-group">#}
-{#                <li class="list-group-item">#}
-{#                    <input class="form-check-input me-1" type="checkbox" value="" id="firstCheckbox">#}
-{#                    <label class="form-check-label" for="firstCheckbox">First checkbox</label>#}
-{#                </li>#}
-{#                <li class="list-group-item">#}
-{#                    <input class="form-check-input me-1" type="checkbox" value="" id="secondCheckbox">#}
-{#                    <label class="form-check-label" for="secondCheckbox">Second checkbox</label>#}
-{#                </li>#}
-{#                <li class="list-group-item">#}
-{#                    <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">#}
-{#                    <label class="form-check-label" for="thirdCheckbox">Third checkbox</label>#}
-{#                </li>#}
-{#                <li class="list-group-item">#}
-{#                    <input class="form-check-input me-1" type="checkbox" value="" id="thirdCheckbox">#}
-{#                    <label class="form-check-label" for="thirdCheckbox">Third checkbox</label>#}
-{#                </li>#}
-{#            </ul>#}
-{#        </div>#}
-{#        <div class="col-md-2">#}
-{#            <button class="btn btn-success" style="width: 100% ;height: 100px"> Rechercer</button>#}
-{#        </div>#}
     </div>
     <div class="row p-1 d-flex align-items-center" style="border: solid 1px darkgray ; border-radius: 10px">
         <table class="table table-striped">
@@ -121,7 +105,7 @@
             </thead>
             <tbody>
             <!-- Tablonun içeriği buraya eklenebilir -->
-            {% for sortie in sorties  %}
+            {% for sortie in pagination %}
                 <tr>
                     <td>{{ sortie.nom }}</td>
                     <td>{{ sortie.dateHeureDebut | date('d-m-Y') }}</td>
@@ -153,22 +137,40 @@
                         {% if setSortieUser == 'true' %}
                             {% if app.user.id == sortie.organisateur.id %}
                                 {% if sortie.etat.libelle == constant('App\\Entity\\Etat::CREE') %}
-                                    <a class="text-decoration-none" href="">Modifier -</a>
-                                    <a class="text-decoration-none" href="">Publier</a>
+                                    <a class="text-decoration-none"
+                                       href="{{ path( 'app_modifier_sortie',{'id': sortie.id}) }}">Modifier -</a>
+                                    <a class="text-decoration-none"
+                                       href="{{ path('app_home-publier', {'id': sortie.id}) }}">Publier</a>
                                 {% else %}
-                                    <a class="text-decoration-none" href="">Afficher</a>
-                                    <a class="text-decoration-none" href="">Annuler</a>
+                                    {% if  sortie.etat.libelle == constant('App\\Entity\\Etat::ANNULE') %}
+                                        <a class="text-decoration-none"
+                                           href="{{ path('app_afficiher_sortir', {'id': sortie.id}) }}">Afficher -</a>
+                                        <a class="text-decoration-none"
+                                           href="{{ path('app_home-publier', {'id': sortie.id}) }}">Publier</a>
+                                    {% else %}
+                                        <a class="text-decoration-none"
+                                           href="{{ path('app_afficiher_sortir', {'id': sortie.id}) }}">Afficher -</a>
+                                        <a class="text-decoration-none"
+                                           href="{{ path('app_annuler_sortie', {'id': sortie.id}) }}">Annuler</a>
+                                    {% endif %}
+
+
                                 {% endif %}
                             {% else %}
                                 {% if sortie.getByIdParticipant(app.user.id) == app.user %}
-                                    <a class="text-decoration-none" href=""> Afficher - </a>
-                                    <a class="text-decoration-none" href=""> S'désister</a>
+                                    <a class="text-decoration-none"
+                                       href="{{ path('app_afficiher_sortir', {'id': sortie.id}) }}"> Afficher - </a>
+                                    <a class="text-decoration-none"
+                                       href="{{ path('app_home-desister', {'id': sortie.id}) }}"> S'désister</a>
                                 {% else %}
                                     {% if sortie.etat.libelle == constant('App\\Entity\\ETAT::PUBLIER') %}
-                                        <a class="text-decoration-none" href=""> Afficher - </a>
-                                        <a class="text-decoration-none" href=""> S'inscrirer</a>
+                                        <a class="text-decoration-none"
+                                           href="{{ path('app_afficiher_sortir', {'id': sortie.id}) }}"> Afficher - </a>
+                                        <a class="text-decoration-none"
+                                           href="{{ path('app_home-inscrir', {'id': sortie.id}) }}"> S'inscrirer</a>
                                     {% else %}
-                                        <a class="text-decoration-none" href=""> Afficher </a>
+                                        <a class="text-decoration-none"
+                                           href="{{ path('app_afficiher_sortir', {'id': sortie.id}) }}"> Afficher </a>
                                     {% endif %}
                                 {% endif %}
 
@@ -182,11 +184,11 @@
             {% endfor %}
             </tbody>
         </table>
-{#        <div class="d-flex justify-content-center m-auto p-4">#}
-{#            <ul class="pagination">#}
-{#                {{ knp_pagination_render(pagination,'@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig') }}#}
-{#            </ul>#}
-{#        </div>#}
+        <div class="d-flex justify-content-center m-auto p-4">
+            <ul class="pagination">
+                {{ knp_pagination_render(pagination,'@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig') }}
+            </ul>
+        </div>
 
 
     </div>
