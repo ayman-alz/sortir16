@@ -24,6 +24,12 @@ class Ville
     #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Lieu::class)]
     private Collection $lieus;
 
+    public function __toString(): string
+    {
+        return $this->nom . ' ' . $this->codePostal . ' ' ;
+    }
+
+
     public function __construct()
     {
         $this->lieus = new ArrayCollection();

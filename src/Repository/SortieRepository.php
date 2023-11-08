@@ -42,9 +42,11 @@ class SortieRepository extends ServiceEntityRepository
         if ($sortieFiltre ->getOrganisateur()) {
             $qb ->andWhere('s.organisateur = :organisateur') ->setParameter('organisateur' , $this->security->getUser());
         }
-        if ($sortieFiltre ->getInscrit()) {
-            $qb ->andWhere('s.inscrit = :inscrit') ->setParameter('inscrit' , $this ->security->getUser());
-        }
+
+       if ($sortieFiltre ->getInscrit()) {
+           $qb ->andWhere(':inscrit MEMBER OF s.participants') ->setParameter('inscrit' , $this ->security ->getUser());
+       }
+      // if ()
 
 
 

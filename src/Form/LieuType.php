@@ -31,9 +31,8 @@ class LieuType extends AbstractType
                         'maxMessage' => 'La rue du lieu ne peut pas comporter plus de {{ limit }} caractères.',
                     ]),
                 ],
-                'required'=>true
+                'required' => true
             ])
-
             ->add('rue', null, [
                 'label' => 'Rue du Lieu',
                 'constraints' => [
@@ -47,7 +46,7 @@ class LieuType extends AbstractType
                         'maxMessage' => 'La rue du lieu ne peut pas comporter plus de {{ limit }} caractères.',
                     ]),
                 ],
-                'required'=>true
+                'required' => true
             ])
             ->add('latitude', IntegerType::class, [
                 'label' => 'Latitude',
@@ -56,7 +55,7 @@ class LieuType extends AbstractType
                         'message' => 'Ce champ ne peut pas être vide.',
                     ]),
                 ],
-                'required'=>false,
+                'required' => false,
             ])
             ->add('longitude', IntegerType::class, [
                 'label' => 'Longitude',
@@ -65,19 +64,10 @@ class LieuType extends AbstractType
                         'message' => 'Ce champ ne peut pas être vide.',
                     ]),
                 ],
-                'required'=>false,
+                'required' => false,
             ])
-        ->add('ville', EntityType::class, [
-            'class' => Ville::class,
-            'label' => 'Les villes',
-            'label_attr' => [
-                'class' => 'form-label mt-4',
-            ],
-            'choice_label' => 'nom',
-            'multiple' => true,
-            'expanded' => false,
-        ]
-    );
+            ->add('ville', EntityType::class
+                , ['class' => Ville::class]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
