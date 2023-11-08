@@ -3,7 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Sortie;
-use App\Form\Model\SortieFiltre;
+use App\Form\Model\SortieFilter;
+
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -23,7 +24,7 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
-    public function getWithFilters(SortieFiltre $sortieFiltre){
+    public function getWithFilters(SortieFilter $sortieFiltre){
         $qb = $this->createQueryBuilder('s');
 
         if($sortieFiltre->getCampus()){
