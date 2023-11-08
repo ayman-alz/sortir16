@@ -18,27 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
- /*   #[Route('/', name: 'app_home',methods: ['GET', 'POST'])]
-    public function index(SortieRepository $sortieRepository,
-                          EtatRepository $etatRepository,
-                          Request $request, PaginatorInterface $paginator,EntityManagerInterface $em): Response
-    {
-        $sorties = $sortieRepository->findAll();
-        $sorties = $this->updateEtat($em, $sorties,$etatRepository);
 
-        $page = $request->query->getInt('page', 1);
-        $limit = 5;
-
-        $pagination = $paginator->paginate(
-            $sorties, // Sayfalayacağınız koleksiyon
-            $page,    // Sayfa numarası
-            $limit    // Sayfa başına sonuç sayısı
-        );
-        return $this->render('home/home.html.twig', [
-            'sorties' => $sorties,
-            'pagination' => $pagination
-        ]);
-    }*/
     #[Route('/', name: 'app_home', methods: ['GET', 'POST'])]
     public function filterIndex(SortieRepository $sortieRepository,EntityManagerInterface $em, EtatRepository $etatRepository, Request $request, PaginatorInterface $paginator): Response
     {
@@ -46,7 +26,6 @@ class HomeController extends AbstractController
         $sortieFilter = new SortieFilter();
         $form = $this->createForm(SearchFormType::class, $sortieFilter);
         $form->handleRequest($request);
-        dump($form);
         $sorties = $sortieRepository->getWithFilters($sortieFilter);
         $sorties = $this->updateEtat($em, $sorties,$etatRepository);
 
