@@ -26,6 +26,8 @@ class SortieFilter
 
     private ?bool $soireepasse = null;
 
+
+
     public function getNoninscrit(): ?bool
     {
         return $this->noninscrit;
