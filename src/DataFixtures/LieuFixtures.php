@@ -7,9 +7,10 @@ use App\Entity\Ville;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 
-class LieuFixtures extends Fixture
+class LieuFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -19,8 +20,8 @@ class LieuFixtures extends Fixture
         for ($i = 0; $i < 10; $i++) {
 
             $lieu = new Lieu();
-            $lieu->setNom($faker->nom);
-            $lieu->setrue($faker->rue);
+            $lieu->setNom($faker->unique()->word);
+            $lieu->setrue($faker->streetName);
             $lieu->setlatitude($faker->latitude);
             $lieu->setlongitude($faker->longitude);
             $lieu->setVille($faker->randomElement($villes));
@@ -32,7 +33,7 @@ class LieuFixtures extends Fixture
 
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             VilleFixtures::class,

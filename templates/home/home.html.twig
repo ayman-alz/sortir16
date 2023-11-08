@@ -66,27 +66,33 @@
             </div>
 
         </div>
-        <div class="col-md-5  ">
-            <ul class="list-group">
-                <li class="list-group-item">
-                    {{ form_widget(filterForm.organisateur) }}
-                </li>
-                <li class="list-group-item">
-                    {{ form_widget(filterForm.inscrit) }}
-                </li>
-                <li class="list-group-item">
-                    {{ form_widget(filterForm.noninscrit) }}
-                </li>
-                <li class="list-group-item">
-                    {{ form_widget(filterForm.soireepasse) }}
-                </li>
-            </ul>
-        </div>
+
+            <div class="col-md-5  ">
+                <ul class="list-group">
+                    {% if app.user %}
+                    <li class="list-group-item">
+                        {{ form_widget(filterForm.organisateur) }}
+                    </li>
+                    <li class="list-group-item">
+                        {{ form_widget(filterForm.inscrit) }}
+                    </li>
+                    <li class="list-group-item">
+                        {{ form_widget(filterForm.noninscrit) }}
+                    </li>
+                    {% endif %}
+                    <li class="list-group-item">
+                        {{ form_widget(filterForm.soireepasse) }}
+                    </li>
+                </ul>
+            </div>
+
+
+
         <div class="col-md-2">
             {{ form_widget(filterForm.submit) }}
         </div>
 
-        {{ form_end(filterForm) }}
+        {{ form_end(filterForm ,{'render_rest': false}) }}
 
     </div>
     <div class="row p-1 d-flex align-items-center" style="border: solid 1px darkgray ; border-radius: 10px">

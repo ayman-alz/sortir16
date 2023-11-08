@@ -7,7 +7,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
-;
+
 
 class VilleFixtures extends Fixture
 {
@@ -19,9 +19,10 @@ class VilleFixtures extends Fixture
             $ville = new Ville();
             $ville->setNom($faker->city);
             $ville->setCodePostal($faker->postcode);
+            $manager->persist($ville);
 
-            $manager->flush();
         }
-        $manager->persist();
+        $manager->flush();
+
     }
 }

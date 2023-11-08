@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ModifierSortieController extends AbstractController
 {
@@ -22,7 +23,9 @@ class ModifierSortieController extends AbstractController
         $villes = $villeRepository->findAll();
         $etatCree = $etatRepository->findByLibelle(Etat::CREE);
         $etatPublier = $etatRepository->findByLibelle(Etat::PUBLIER);
-        if ($this->getUser() !== $sortie->getOrganisateur()) {
+
+        if (($this->getUser() !== $sortie->getOrganisateur()) && !$this->isGranted('ROLE_ADMIN')) {
+            dump('azer');
             throw $this->createAccessDeniedException();
         }
 

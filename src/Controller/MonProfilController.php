@@ -17,7 +17,7 @@ MonProfilController extends AbstractController
     {
 
         $participant = $repository->find($id);
-
+        dump($participant);
         return $this->render('mon_profil/mon_profil.html.twig', [
             'participant' => $participant
         ]);

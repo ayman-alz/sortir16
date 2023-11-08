@@ -12,14 +12,14 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
-;
+
 
 
 class SortieFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        $faker = \Faker\Factory::create('fr_FR');
+        $faker = Factory::create('fr_FR');
         $campus = $manager->getRepository(Campus::class)->findAll();
         $members = $manager->getRepository(Participant::class)->findAll();
         $places = $manager->getRepository(Lieu::class)->findAll();
@@ -28,24 +28,26 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
 
         for ($i = 1; $i <= 15; $i++) {
             $excursion = new Sortie();
-            $excursion->setNom($faker->word());
-            $dateStart = $faker->dateTimeBetween('-2 months', '+2 months');
+            $excursion->setNom($faker->word);
+            $dateStart = $faker->dateTimeBetween('-1 months', '+2 months');
             $excursion->setDateHeureDebut($dateStart);
             $excursion->setDuree(mt_rand(30, 240));
-            $excursion->setDateLimiteInscription($faker->dateTimeInInterval($dateStart, '+2 months'));
+            $excursion->setDateLimiteInscription($faker->dateTimeBetween($dateStart,'+2 months'));
             $excursion->setNbInsciptionMax(mt_rand(1, 30));
-            $excursion->setInfosSortie($faker->sentence(8));
+            $excursion->setInfosSortie($faker->text(100));
             $organizerMember = $faker->randomElement($members);
             $excursion->setOrganisateur($organizerMember);
-            $excursion->addParticipant($organizerMember);
+            if ($excursion->getDateHeureDebut()> new \DateTime && $excursion->getDateLimiteInscription()>new \DateTime)
+            {
+                if (mt_rand(1, 100) <= 30) {
+                    $this->addParticipant($excursion);
+                }
+            }
             $excursion->setCampus($faker->randomElement($campus));
 
-            $excursion->setEtat($faker->randomElement([$etatCree,$etatPublier]));
+            $excursion->setEtat($faker->randomElement(array($etatCree,$etatPublier)));
             $excursion->setLieu($faker->randomElement($places));
             //Condition for our SpecialMember (30% to be participant of an excursion).
-            if (mt_rand(1, 100) <= 30) {
-                $this->addParticipant($excursion);
-            }
 
             $manager->persist($excursion);
         }
@@ -55,7 +57,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
     }
     public function addParticipant(Sortie $sortie): void {
         for ($i = 0; $i <= mt_rand(0,5); $i++) {
-            $participant = $this->getReference('test' . rand (1,10));
+            $participant = $this->getReference('test' . rand (1,9));
             $sortie->addParticipant($participant);
         }
     }
@@ -65,9 +67,8 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             LieuFixtures::class,
-            VilleFixtures::class,
             UserFixtures::class,
-            CampusFixtures::class,
+            Campusfixtures::class,
         ];
     }
 }

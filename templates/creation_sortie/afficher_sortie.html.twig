@@ -111,7 +111,7 @@
                 </div>
                 <div class="form-group">
                     <label for="code-postal">Code postle</label>
-                    <input value="{{ sorties.lieu.ville.codePostal }}" type="number" id="Codepostle" name="code_post"
+                    <input value="{{ sorties.lieu.ville.getCodePostal }}" type="text" id="Codepostle" name="code_post"
                            class="form-control" readonly>
                 </div>
                 <div class="form-group">
@@ -125,7 +125,7 @@
                     <input value="{{ sorties.lieu.longitude }}" type="number" name="langitude" class="form-control"
                            readonly>
                 </div>
-                {% if app.user == sorties.organisateur%}
+                {% if app.user == sorties.organisateur or is_granted('ROLE_ADMIN') %}
                     <div class="d-flex justify-content-evenly mt-4 ">
                         <a href="{{ path( 'app_modifier_sortie',{'id': sorties.id}) }}" class="btn btn-primary mt-4">Modify</a>
                         <a href="{{ path('app_annuler_sortie', {'id': sorties.id}) }}" type="button" class="btn btn-danger mt-4 ">Annuler</a>
