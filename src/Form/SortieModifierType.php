@@ -7,9 +7,13 @@ use App\Entity\Lieu;
 use App\Entity\Sortie;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Button;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function Sodium\add;
 
 class SortieModifierType extends AbstractType
 {
@@ -39,6 +43,7 @@ class SortieModifierType extends AbstractType
                 'placeholder' => '--Choisir une campus--'
             ])
             ->add('lieu', LieuType::class);
+
 
     }
 

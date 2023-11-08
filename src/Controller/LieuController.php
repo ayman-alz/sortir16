@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Lieu;
-use App\Entity\Ville;
 use App\Repository\LieuRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
