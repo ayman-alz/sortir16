@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Form\SortieFormType;
 use App\Form\SortieModifierType;
+use App\Repository\EtatRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,16 +17,25 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ModifierSortieController extends AbstractController
 {
-    #[Route('/modifier_sortie/{id}', name: 'app_modifier_sortie',requirements: ['id' => '\d+'], methods: ['POST','GET'])]
-    public function index(EntityManagerInterface $em,Sortie $sortie,  VilleRepository  $villeRepository,Request $request): Response
+    #[Route('/modifier_sortie/{id}', name: 'app_modifier_sortie', requirements: ['id' => '\d+'], methods: ['POST', 'GET'])]
+    public function index(EntityManagerInterface $em, EtatRepository $etatRepository,
+                          Sortie                 $sortie, VilleRepository $villeRepository, Request $request): Response
     {
         $villes = $villeRepository->findAll();
-
-        if ( $this->getUser() !== $sortie->getOrganisateur())
-        {
+        $etatCree = $etatRepository->findByLibelle(Etat::CREE);
+        $etatPublier = $etatRepository->findByLibelle(Etat::PUBLIER);
+        if ($this->getUser() !== $sortie->getOrganisateur()) {
             throw $this->createAccessDeniedException();
         }
-        $form_sortie = $this->createForm(SortieModifierType::class,$sortie);
+
+        if ($request->request->has('register')) {
+            $sortie->setEtat($etatCree);
+        }
+        if ($request->request->has('publier')) {
+            $sortie->setEtat($etatPublier);
+        }
+
+        $form_sortie = $this->createForm(SortieModifierType::class, $sortie);
         $form_sortie->handleRequest($request);
 
         if ($form_sortie->isSubmitted() && $form_sortie->isValid()) {
@@ -34,8 +45,8 @@ class ModifierSortieController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
         return $this->render('modifier_sortie/modifier_sortie.html.twig', [
-            'sortie'=>$sortie,
-            'form_sortie'=>$form_sortie,
+            'sortie' => $sortie,
+            'form_sortie' => $form_sortie,
             'cities' => $villes,
 
         ]);

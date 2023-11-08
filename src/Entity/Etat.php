@@ -12,10 +12,10 @@ class Etat
 {
     public const CREE= 'Cree';
     public const PUBLIER = 'Ouverte';
-    public const TERMINE = 'Cloturee';
+    public const TERMINE = 'Clôturée';
     public const ACTIVE = 'Activite en cours';
-    public const ANNULE = 'Annulee';
-    public const PASSE = 'Passee';
+    public const ANNULE = 'Annulée';
+    public const PASSE = 'Passée';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
