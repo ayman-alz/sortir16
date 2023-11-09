@@ -9,6 +9,7 @@ use App\Repository\EtatRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,6 +48,7 @@ class HomeController extends AbstractController
 
 
     #[Route('/publier/{id}', name: 'app_home-publier', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER', statusCode: 404, message: 'NOT ACCES ')]
     public function publierSortie(SortieRepository $sortieRepository, EtatRepository $etatRepository, EntityManagerInterface $em, $id): Response
     {
         $sortie = $sortieRepository->find($id);
@@ -63,6 +65,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/sinscrir/{id}', name: 'app_home-inscrir', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER', statusCode: 404, message: 'NOT ACCES ')]
     public function sinscrirSortir(SortieRepository $sortieRepository, EntityManagerInterface $em, $id): Response
     {
         $sortie = $sortieRepository->find($id);
@@ -75,6 +78,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/sdesister/{id}', name: 'app_home-desister', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER', statusCode: 404, message: 'NOT ACCES ')]
     public function sdesisterSortie(SortieRepository $sortieRepository, EntityManagerInterface $em, $id): Response
     {
         $sortie = $sortieRepository->find($id);

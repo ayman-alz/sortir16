@@ -19,8 +19,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class CreationSortieController extends AbstractController
 {
 
-
-
     #[IsGranted('ROLE_USER', statusCode: 404, message: 'NOT ACCES ')]
     #[Route('/creation_sortie', name: 'app_creation_sortie',methods: ['GET','POST'])]
     public function index(LieuRepository         $lieuRepository,

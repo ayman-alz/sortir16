@@ -18,6 +18,11 @@ class AnnulerSortieController extends AbstractController
     {
         $sortie = $sortieRepository->find($id);
         $etatAnnuler = $etatRepository->findByLibelle(Etat::ANNULE);
+
+        if (($this->getUser() !== $sortie->getOrganisateur()) && !$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $sortie->setEtat($etatAnnuler);
         $em->persist($sortie);
         $em->flush();
@@ -30,7 +35,12 @@ class AnnulerSortieController extends AbstractController
     #[Route('/suprimer-sortie/{id}', name: 'app_suprimer_sortie')]
     public function suprimerSortir(SortieRepository $sortieRepository, $id, EntityManagerInterface $em,): Response
     {
+
         $sortie = $sortieRepository->find($id);
+        if (($this->getUser() !== $sortie->getOrganisateur()) && !$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException();
+        }
+
         $em->remove($sortie);
         $em->flush();
         $this->addFlash('success', 'La sortie a été supprimée');

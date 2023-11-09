@@ -25,7 +25,6 @@ class ModifierSortieController extends AbstractController
         $etatPublier = $etatRepository->findByLibelle(Etat::PUBLIER);
 
         if (($this->getUser() !== $sortie->getOrganisateur()) && !$this->isGranted('ROLE_ADMIN')) {
-            dump('azer');
             throw $this->createAccessDeniedException();
         }
 
