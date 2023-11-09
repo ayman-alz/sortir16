@@ -34,7 +34,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
             $excursion->setDuree(mt_rand(30, 240));
             $excursion->setDateLimiteInscription($faker->dateTimeBetween($dateStart,'+2 months'));
             $excursion->setNbInsciptionMax(mt_rand(1, 30));
-            $excursion->setInfosSortie($faker->text(100));
+            $excursion->setInfosSortie($faker->realText());
             $organizerMember = $faker->randomElement($members);
             $excursion->setOrganisateur($organizerMember);
             if ($excursion->getDateHeureDebut()> new \DateTime && $excursion->getDateLimiteInscription()>new \DateTime)
