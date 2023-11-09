@@ -12,8 +12,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     citySelect.addEventListener('change', function () {
         const selectedCityId = this.value;
+        const url= document.getElementsByName('url')[0].value;
 
-        fetch(`http://localhost/sortir16/public/get_lieu_names?cityId=${selectedCityId}`)
+
+        fetch(`http://localhost${url}get_lieu_names?cityId=${selectedCityId}`)
             .then(response => response.json())
             .then(data => {
                 lieuList.innerHTML = '';
@@ -34,7 +36,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     lieuList.addEventListener('change', function (event) {
         const selecteLieuId = this.value;
-        fetch(`http://localhost/sortir16/public/get_lieu_details?lieuId=${selecteLieuId}`)
+        const url= document.getElementsByName('url')[0].value;
+
+        fetch(`http://localhost${url}get_lieu_details?lieuId=${selecteLieuId}`)
             .then(response => response.json())
             .then(data => {
                 lieuName.textContent = `Name: ${data.nom}`;
@@ -44,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 lieuDetails.style.display = 'block';
             });
 
-        fetch('http://localhost/sortir16/public/get_Lieu', {
+        fetch('http://localhost'+url+'get_Lieu', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -63,7 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const addLieuButton = document.getElementById('addLieuButton');
     const addLieuModal = document.getElementById('addLieuModal');
 
-    addLieuButton.addEventListener('click', function () {
+    addLieuButton.addEventListener('click', function (event) {
+        event.preventDefault();
         if (addLieuModal.style.display === 'none' || addLieuModal.style.display === '') {
             addLieuModal.style.display = 'block';
             lieus_city.style.display = 'none';

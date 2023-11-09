@@ -37,6 +37,7 @@ class CreationSortieController extends AbstractController
         $sortie= new Sortie();
         $sortie->setOrganisateur($this->getUser());
         $sortie->setCampus($this->getUser()->getCampus());
+
         if ($request->request->has('register')) {
             $sortie->setEtat($etatCree);
         }
@@ -46,20 +47,24 @@ class CreationSortieController extends AbstractController
         $form_sortie = $this->createForm(SortieFormType::class,$sortie);
         $form_sortie->handleRequest($request);
 
-        if ($form_sortie->isSubmitted() && $form_sortie->isValid()) {
-            $lieuId = $session->get('lieu');
-            if ($lieuId)
-            {
-                $lieu = $lieuRepository->find($lieuId);
-                $sortie->setLieu($lieu);
-            } else {
-                throwException('Lieu is null');
-            }
-            $em->persist($sortie);
-            $em->flush();
-            return $this ->redirectToRoute('app_home');
+        if($request->request->has('register') || $request->request->has('publier'))
+        {
+            if ($form_sortie->isSubmitted() && $form_sortie->isValid()) {
+                $lieuId = $session->get('lieu');
+                if ($lieuId)
+                {
+                    $lieu = $lieuRepository->find($lieuId);
+                    $sortie->setLieu($lieu);
+                } else {
+                    throwException('Lieu is null');
+                }
+                $em->persist($sortie);
+                $em->flush();
+                return $this ->redirectToRoute('app_home');
 
+            }
         }
+
         return $this->render('creation_sortie/create_sortie.html.twig', [
             'form_sortie' => $form_sortie,
             'cities' => $villes,

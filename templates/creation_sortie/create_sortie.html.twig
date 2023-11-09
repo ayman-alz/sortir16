@@ -49,6 +49,7 @@
                 <div class="col-md-6">
                     <form class="form-inline">
                         <div class="form-group">
+                            <input hidden="hidden" name="url" value="{{ path('app_home') }}">
                             <label for="city">Select a City:</label>
                             <select name="city" id="city" class="form-control">
                                 <option value="">Select a City</option>
@@ -68,6 +69,7 @@
 
             <div class="form-group">
                 <div id="lieus_city" class="row mt-3">
+                    <input hidden="hidden" name="url" value="{{ path('app_home') }}">
                     <div class="col-md-6">
                         <h2>Lieus </h2>
                         <select name="lieu" id="lieuList" class="form-control">
