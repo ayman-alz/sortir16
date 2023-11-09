@@ -19,14 +19,14 @@ class HomeController extends AbstractController
 {
 
     #[Route('/', name: 'app_home', methods: ['GET', 'POST'])]
-    public function filterIndex(SortieRepository $sortieRepository,EntityManagerInterface $em, EtatRepository $etatRepository, Request $request, PaginatorInterface $paginator): Response
+    public function filterIndex(SortieRepository $sortieRepository, EntityManagerInterface $em, EtatRepository $etatRepository, Request $request, PaginatorInterface $paginator): Response
     {
 
         $sortieFilter = new SortieFilter();
         $form = $this->createForm(SearchFormType::class, $sortieFilter);
         $form->handleRequest($request);
         $sorties = $sortieRepository->getWithFilters($sortieFilter);
-        $sorties = $this->updateEtat($em, $sorties,$etatRepository);
+        $sorties = $this->updateEtat($em, $sorties, $etatRepository);
 
 
         $page = $request->query->getInt('page', 1);
@@ -46,12 +46,11 @@ class HomeController extends AbstractController
     }
 
 
-    #[Route('/publier/{id}', name: 'app_home-publier',methods: ['GET', 'POST'])]
-    public function publierSortie(SortieRepository $sortieRepository,EtatRepository $etatRepository,EntityManagerInterface $em,$id): Response
+    #[Route('/publier/{id}', name: 'app_home-publier', methods: ['GET', 'POST'])]
+    public function publierSortie(SortieRepository $sortieRepository, EtatRepository $etatRepository, EntityManagerInterface $em, $id): Response
     {
         $sortie = $sortieRepository->find($id);
-        if ( $this->getUser()  !== $sortie->getOrganisateur())
-        {
+        if ($this->getUser() !== $sortie->getOrganisateur()) {
             throw $this->createAccessDeniedException();
         }
         $etatPublier = $etatRepository->findByLibelle(Etat::PUBLIER);
@@ -62,19 +61,21 @@ class HomeController extends AbstractController
 
         return $this->redirectToRoute('app_home');
     }
-    #[Route('/sinscrir/{id}', name: 'app_home-inscrir',methods: ['GET', 'POST'])]
-    public function sinscrirSortir(SortieRepository $sortieRepository,EntityManagerInterface $em,$id): Response
+
+    #[Route('/sinscrir/{id}', name: 'app_home-inscrir', methods: ['GET', 'POST'])]
+    public function sinscrirSortir(SortieRepository $sortieRepository, EntityManagerInterface $em, $id): Response
     {
         $sortie = $sortieRepository->find($id);
-        $sortie->addParticipant($this->getUser() );
+        $sortie->addParticipant($this->getUser());
 
         $em->persist($sortie);
         $em->flush();
 
         return $this->redirectToRoute('app_home');
     }
-    #[Route('/sdesister/{id}', name: 'app_home-desister',methods: ['GET', 'POST'])]
-    public function sdesisterSortie(SortieRepository $sortieRepository,EntityManagerInterface $em,$id): Response
+
+    #[Route('/sdesister/{id}', name: 'app_home-desister', methods: ['GET', 'POST'])]
+    public function sdesisterSortie(SortieRepository $sortieRepository, EntityManagerInterface $em, $id): Response
     {
         $sortie = $sortieRepository->find($id);
         $sortie->removeParticipant($this->getUser());
@@ -84,8 +85,8 @@ class HomeController extends AbstractController
         return $this->redirectToRoute('app_home');
     }
 
-    #[Route('/afficher/{id}', name:'app_afficiher_sortir',methods:['GET'])]
-    public function afficiherSortir($id,SortieRepository $sortieRepository)
+    #[Route('/afficher/{id}', name: 'app_afficiher_sortir', methods: ['GET'])]
+    public function afficiherSortir($id, SortieRepository $sortieRepository)
     {
         $sorties = $sortieRepository->find($id);
         return $this->render('creation_sortie/afficher_sortie.html.twig', [
@@ -93,27 +94,38 @@ class HomeController extends AbstractController
         ]);
     }
 
-    public function updateEtat(EntityManagerInterface $em,$sorties ,EtatRepository $etatRepository){
+    public function updateEtat(EntityManagerInterface $em, $sorties, EtatRepository $etatRepository)
+    {
 
-        $etatCloutere =$etatRepository->findByLibelle(Etat::TERMINE);
-        $etatPasse =$etatRepository->findByLibelle(Etat::PASSE);
-        $etatEncors =$etatRepository->findByLibelle(Etat::ACTIVE);
+        $etatCloutere = $etatRepository->findByLibelle(Etat::TERMINE);
+        $etatPasse = $etatRepository->findByLibelle(Etat::PASSE);
+        $etatEncors = $etatRepository->findByLibelle(Etat::ACTIVE);
 
 
-        foreach ($sorties as $sortie){
-            if($sortie->getEtat()->getLibelle() === Etat::PUBLIER){
-                if ($sortie->getDateLimiteInscription() < new \DateTime()) {
+        foreach ($sorties as $sortie) {
+
+            if ($sortie->getEtat()->getLibelle() === Etat::PUBLIER) {
+                $now = new \DateTime('now');
+
+                if ($sortie->getDateLimiteInscription() < $now) {
                     $sortie->setEtat($etatCloutere);
                     $em->persist($sortie);
                 }
-                if ($sortie->getDateHeureDebut() < new \DateTime()) {
-                    $sortie->setEtat($etatPasse);
-                    $em->persist($sortie);
+
+                if ($sortie->getDateHeureDebut() <= $now) {
+                    $start_datetime= $sortie->getDateHeureDebut()->modify('+1 day');
+
+                    if ($start_datetime > $now) {
+                        $sortie->setEtat($etatEncors);
+                        $em->persist($sortie);
+                    } else {
+                        $sortie->setEtat($etatPasse);
+                        $em->persist($sortie);
+                    }
+
                 }
-                if ($sortie->getDateHeureDebut() == new \DateTime()) {
-                    $sortie->setEtat($etatEncors);
-                    $em->persist($sortie);
-                }
+
+
             }
 
         }

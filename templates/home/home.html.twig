@@ -6,24 +6,24 @@
 
 
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ url('app_ville') }}" class="text-decoration-none">Viles</a>
-        <a href="{{ url('app_create_campus') }}" class="text-decoration-none">Campus</a>
-        <a href="{{ url('app_home') }}" class="text-decoration-none">Accueil</a>
-        <a href="{{ path('app_mon_profil',  {'id': app.user.id }) }}" class="text-decoration-none">Mon Profil</a>
-        <a class="text-decoration-none" href="{{ path('app_logout') }}" title="Logout">
+        <a href="{{ url('app_ville') }}" class="nav-link">Viles</a>
+        <a href="{{ url('app_create_campus') }}" class="nav-link">Campus</a>
+        <a href="{{ url('app_home') }}" class="nav-link">Accueil</a>
+        <a href="{{ path('app_mon_profil',  {'id': app.user.id }) }}" class="nav-link">Mon Profil</a>
+        <a class="nav-link" href="{{ path('app_logout') }}" title="Logout">
             Logout (Hello {{ app.user }})
         </a>
     {% elseif is_granted('ROLE_USER') %}
-        <a href="{{ url('app_home') }}" class="text-decoration-none">Accueil</a>
-        <a href="{{ path('app_mon_profil', {'id': app.user.id } ) }}" class="text-decoration-none">Mon Profil</a>
-        <a class="text-decoration-none" href="{{ path('app_logout') }}" title="Logout">
+        <a href="{{ url('app_home') }}" class="nav-link">Accueil</a>
+        <a href="{{ path('app_mon_profil', {'id': app.user.id } ) }}" class="nav-link">Mon Profil</a>
+        <a class="nav-link" href="{{ path('app_logout') }}" title="Logout">
             Logout (Hello {{ app.user }})
         </a>
     {% else %}
-        <a class="text-decoration-none" href="{{ path('app_login') }}" title="Logout">
+        <a class="nav-link" href="{{ path('app_login') }}" title="Logout">
             Login
         </a>
-        <a class="text-decoration-none" href="{{ url('app_register') }}">S'inscrire</a>
+        <a  class="nav-link" href="{{ url('app_register') }}">S'inscrire</a>
 
     {% endif %}
 
@@ -95,8 +95,8 @@
         {{ form_end(filterForm ,{'render_rest': false}) }}
 
     </div>
-    <div class="row p-1 d-flex align-items-center" style="border: solid 1px darkgray ; border-radius: 10px">
-        <table class="table table-striped">
+    <div class="row p-1 d-flex align-items-center"  >
+        <table class="table table-hover ">
             <thead>
             <tr>
                 <th scope="col">Nom de la sortie</th>
@@ -190,22 +190,24 @@
             {% endfor %}
             </tbody>
         </table>
-        <div class="d-flex justify-content-center m-auto p-4">
-            <ul class="pagination">
-                {{ knp_pagination_render(pagination,'@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig') }}
-            </ul>
+        <div class="row">
+            <div class="col-md-3 mt-3 d-flex justify-content-start">
+                {% if app.user is not null %}
+                    <a href="{{ url('app_creation_sortie') }}" class="text-decoration-none btn btn-warning"> Créer une
+                        sortie</a>
+                {% endif %}
+
+
+            </div>
+            <div class="d-flex justify-content-center m-auto p-4">
+                <ul class="pagination">
+                    {{ knp_pagination_render(pagination,'@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig') }}
+                </ul>
+            </div>
         </div>
 
 
-    </div>
-    <div class="row">
-        <div class="col-md-3 mt-3 d-flex justify-content-start">
-            {% if app.user is not null %}
-                <a href="{{ url('app_creation_sortie') }}" class="text-decoration-none btn btn-warning"> Créer une
-                    sortie</a>
-            {% endif %}
 
-
-        </div>
     </div>
+
 {% endblock %}

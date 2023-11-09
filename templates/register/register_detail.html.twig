@@ -5,8 +5,8 @@
 {% block header %}
 
     {% if app.user %}
-        <a class="text-decoration-none" href="{{ url('app_home') }}">Accueil</a>
-        <a class="text-decoration-none" href="{{ path('app_logout') }}" title="Logout">
+        <a class="nav-link"href="{{ url('app_home') }}">Accueil</a>
+        <a class="nav-link"href="{{ path('app_logout') }}" title="Logout">
             Logout (Hello {{ app.user }})
         </a>
     {% endif %}

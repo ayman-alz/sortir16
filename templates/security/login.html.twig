@@ -4,7 +4,7 @@
 
 {% block header %}
     {% if not app.user %}
-        <a class="text-decoration-none" href="{{ url('app_register') }}">S'inscrire</a>
+        <a class="nav-link"href="{{ url('app_register') }}">S'inscrire</a>
 
     {% endif %}
 {% endblock %}
@@ -17,7 +17,16 @@
 
     {% if app.user %}
         <div class="mb-3">
-            You are logged in as {{ app.user.id }}, <a href="{{ path('app_logout') }}">Logout</a>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ app.user.nom | capitalize }}</h5>
+                    You are logged ,if you want <a href="{{ path('app_logout') }}">Logout</a>
+                    Return <a class="text-decoration-none" href="{{ url('app_home') }}">Home</a>
+
+                </div>
+
+            </div>
+
         </div>
     {% else %}
 

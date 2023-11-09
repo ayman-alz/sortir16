@@ -3,8 +3,8 @@
 {% block title %}Hello ModifierSortieController!{% endblock %}
 
 {% block header %}
-    <a class="text-decoration-none" href="{{ url('app_home') }}">Accueil</a>
-    <a class="text-decoration-none" href="{{ path('app_logout') }}" title="Logout">
+    <a class="nav-link"href="{{ url('app_home') }}">Accueil</a>
+    <a class="nav-link"href="{{ path('app_logout') }}" title="Logout">
         Logout (Hello {{ app.user }})
     </a>
 {% endblock %}
@@ -36,7 +36,7 @@
                     sortie </button>
                  <a href="{{ path('app_suprimer_sortie', {'id': sortie.id}) }}" class="btn btn-danger mt-4 ">Supprimer la
                     sortie</a>
-                <button type="button" class="btn btn-warning mt-4 ">Annuler</button>
+                <a href="{{ path('app_annuler_sortie', {'id': sortie.id}) }}" class="btn btn-warning mt-4 ">Annuler</a>
 
 
             </div>

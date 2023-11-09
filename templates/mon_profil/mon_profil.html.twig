@@ -4,13 +4,13 @@
 
 
     {% block header %}
-        <a class="text-decoration-none" href="{{ url('app_home') }}">Accueil</a>
+        <a class="nav-link"href="{{ url('app_home') }}">Accueil</a>
         {% if app.user %}
-            <a class="text-decoration-none" href="{{ path('app_mon_profil', {'id':app.user.id} ) }}">Mon Profil</a>
+            <a class="nav-link"href="{{ path('app_mon_profil', {'id':app.user.id} ) }}">Mon Profil</a>
             <a class="nav-link" href="{{ path('app_logout') }}" title="Logout">
                 Logout (Hello {{ app.user }})</a>
         {% else %}
-            <a class="text-decoration-none" href="{{ url('app_register') }}">S'inscrire</a>
+            <a class="nav-link"href="{{ url('app_register') }}">S'inscrire</a>
 
         {% endif %}
 

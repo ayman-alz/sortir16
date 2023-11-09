@@ -3,8 +3,8 @@
 {% block title %}Create Sortie{% endblock %}
 
 {% block header %}
-    <a class="text-decoration-none" href="{{ url('app_home') }}">Accueil</a>
-    <a href="{{ path('app_mon_profil',  {'id': app.user.id }) }}" class="text-decoration-none">Mon Profil</a>
+    <a class="nav-link"href="{{ url('app_home') }}">Accueil</a>
+    <a href="{{ path('app_mon_profil',  {'id': app.user.id }) }}" class="nav-link">Mon Profil</a>
     <a class="nav-link" href="{{ path('app_logout') }}" title="Logout">
         Logout (Hello {{ app.user }})</a>
 {% endblock %}

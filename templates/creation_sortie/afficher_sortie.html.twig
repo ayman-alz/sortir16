@@ -3,13 +3,13 @@
 {% block title %}Hello ModifierSortieController!{% endblock %}
 
 {% block header %}
-    <a class="text-decoration-none" href="{{ url('app_home') }}">Accueil</a>
+    <a class="nav-link"href="{{ url('app_home') }}">Accueil</a>
     {% if app.user %}
-        <a class="text-decoration-none" href="{{ path('app_logout') }}" title="Logout">
+        <a class="nav-link"href="{{ path('app_logout') }}" title="Logout">
             Logout (Hello {{ app.user }})
         </a>
         {% else %}
-            <a class="text-decoration-none" href="{{ url('app_register') }}">S'inscrire</a>
+            <a class="nav-link"href="{{ url('app_register') }}">S'inscrire</a>
 
     {% endif %}
 
@@ -60,7 +60,7 @@
                 <div class="row p-1 mt-5 d-flex align-items-center" style="border: solid 1px darkgray ; border-radius: 10px">
                     <p>
                         <h4>Liste des participants inscrits</h4></p>
-                    <table class="table table-striped border-1">
+                    <table class="table table-hover border-1">
                         <thead>
                         <tr>
                             <th scope="col">Pseudo</th>

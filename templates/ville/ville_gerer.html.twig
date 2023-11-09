@@ -3,8 +3,8 @@
 {% block title %}Ville Gérer!{% endblock %}
 
 {% block header %}
-    <a class="text-decoration-none"  href="{{ url('app_home') }}">Accueil</a>
-    <a class="text-decoration-none"  href="{{ path('app_mon_profil', {'id':app.user.id} )}}">Mon Profil</a>
+    <a class="nav-link" href="{{ url('app_home') }}">Accueil</a>
+    <a class="nav-link" href="{{ path('app_mon_profil', {'id':app.user.id} )}}">Mon Profil</a>
     <a class="nav-link" href="{{ path('app_logout') }}" title="Logout">
         Logout (Hello {{ app.user }})
     </a>
@@ -30,8 +30,8 @@
 
             </div>
         </form>
-        <div class="row p-1 d-flex align-items-center mt-5" style="border: solid 1px gray ; border-radius: 10px" >
-            <table class="table table-striped">
+        <div class="row p-1 d-flex align-items-center mt-5"  >
+            <table class="table table-hover">
                 <thead>
                 <tr>
                     <th scope="col">Ville</th>
